@@ -1,10 +1,27 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.contrib.auth.decorators import login_required
+import os, uuid
 
 # from .forms import  VideoForm, CommentsForm
 from .models import User, Video, Comment
 from .forms import InstructorForm, VideoForm, CommentsForm
+from azure.storage.blob import (
+    BlobServiceClient,
+    BlobClient,
+    ContainerClient,
+    __version__,
+)
+
+
+class AzureStreaming:
+    def __init__(self):
+        try:
+            print("Azure Blob storage v" + __version__ + " - Python quickstart sample")
+            # Quick start code goes here
+
+        except Exception as ex:
+            print(f"Exception: {ex}")
 
 
 def video_upload(request):
