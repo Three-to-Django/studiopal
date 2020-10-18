@@ -41,7 +41,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    'fontawesome_5',
+    "fontawesome_5",
     "registration",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -104,7 +104,6 @@ DATABASES = {
         "PASSWORD": env("DATABASE_PASSWORD"),
         "HOST": env("DATABASE_HOST"),
         "PORT": env("DATABASE_PORT"),
-        "SSLMODE": env("SSLMODE"),
     }
 }
 
@@ -163,9 +162,6 @@ LOGIN_REDIRECT_URL = "/"
 
 TAGGIT_CASE_INSENSITIVE = True
 
-
-DEFAULT_FILE_STORAGE = "backend.custom_azure.AzureMediaStorage"
-STATICFILES_STORAGE = "backend.custom_azure.AzureStaticStorage"
 
 STATIC_LOCATION = "static"
 MEDIA_LOCATION = "media"
