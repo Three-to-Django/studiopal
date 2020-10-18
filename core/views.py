@@ -6,22 +6,6 @@ import os, uuid
 # from .forms import  VideoForm, CommentsForm
 from .models import User, Video, Comment
 from .forms import InstructorForm, VideoForm, CommentsForm
-from azure.storage.blob import (
-    BlobServiceClient,
-    BlobClient,
-    ContainerClient,
-    __version__,
-)
-
-
-class AzureStreaming:
-    def __init__(self):
-        try:
-            print("Azure Blob storage v" + __version__ + " - Python quickstart sample")
-            # Quick start code goes here
-
-        except Exception as ex:
-            print(f"Exception: {ex}")
 
 
 def video_upload(request):
@@ -44,6 +28,7 @@ def video_detail(request, video_pk):
 def landing_page(request):
     videos = Video.objects.all()
     return render(request, "studiopal/landing_page.html", {"videos": videos})
+
 
 def add_comment(request, video_pk):
     video = get_object_or_404(Video, pk=video_pk)
