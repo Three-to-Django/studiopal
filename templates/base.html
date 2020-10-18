@@ -1,52 +1,70 @@
-{% load static %}
+
+{% load fontawesome_5 %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static '/css/styles.css/' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
-    <title>{% block title %}StudioPal{% endblock %}</title>
-    <header class="header">
-      <a href="#">
-        <img
-          src="http://unsplash.it/300/200?gravity=center"
-          class="studiopal-logo"
-        />
-      </a>
-      StudioPal!
-      <form class="search-bar">
-        <input
-          class="search-input"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button type="submit" class="search-btn">
-          <img src="http://unsplash.it/75/50?gravity=center" />
-        </button>
-      </form>
-      <div class="menu-icons">
-        <a href="#">
-          <img src="http://unsplash.it/75/50?gravity=center" alt="this link" />
-        </a>
-        {% if not user.is_authenticated %}
-    <p>
-      <a href="{% url 'auth_login' %}">login</a>
-    </p>
-    or
-    <a href="{% url 'registration_register' %}">createaccount</a>
-    {% else %}
-    <p>Welcome {{ user.username }}</p>
-        <a href="{% url 'add_instructor_info' user_pk=user.pk %}">
-          <p>Become a content creator</p>
-        </a>
-        <a href = "{% url 'auth_logout' %}"><i class="fas fa-sign-out-alt"></i>&nbsp;logout</a>
-    {% endif %}
-      </div>
-    </header>
-  </head>
+	{% load static %}
+	{% fontawesome_5_static %}
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script src={% static 'js/script.js'%}></script>
+	<title>{% block title %}StudioPal{% endblock %}</title>
+</head>
   <body>
-    {% block content %} {% endblock %}
+		<nav style="background: #6767f6">
+			<div class="nav-wrapper">
+				<a href="{% url 'landing_page' %}" class="brand-logo">
+					<div style="padding-left: 15px;">
+						<span style="font-family: Playfair Display; font-weight: 900;">Studio</span><span style="font-family: Open Sans; font-weight: 300; font-size: 28px;">Pal</span>
+					</div>
+				</a>
+				<ul class="right hide-on-med-and-down">
+				{% if not user.is_authenticated %}
+					<li>
+						<a href="{% url 'auth_login' %}">
+							Login
+						</a>
+					</li>
+					<li>
+						<a href="{% url 'registration_register' %}">
+							Sign up
+						</a>
+					</li>
+				{% else %}
+					<li style="margin-right: 65px">
+						<div style="display: flex; align-items: center;">
+							<div style="height: 35px; width: 35px; background: white; margin-right: 15px; border-radius: 50%;">
+							</div>
+							Hey, {{ user.username }}!
+						</div>
+					</li>
+					<li class="row">
+						<div class="input-field" style="display: flex; align-items: center">
+							<span style="margin-right: 5px">{% fa5_icon 'search' %}</span>
+							<input style="padding: 0px; border-bottom: 1.7px solid white;" class="validate" id="search" type="search" placeholder="search" required>
+						</div>
+					<li>
+					<li>
+					<a href="{% url 'add_instructor_info' user_pk=user.pk %}">
+						<div style="display: flex; align-items: center">
+							<span style="margin-right: 5px">{% fa5_icon 'chalkboard-teacher' %}</span>
+							Create studio
+						</div>
+					</a>
+					</li>
+					<li><a href="{% url 'auth_logout' %}">Logout</a></li>
+				</ul>
+				{% endif %}
+			</div>
+		</nav>
+		<div class="container">
+		</div>		
+		{% block content %} 
+		{% endblock %}
   </body>
 </html>

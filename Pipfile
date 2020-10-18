@@ -26,6 +26,7 @@ azure-mgmt-media = "==1.1.1"
 ipython = "*"
 azure-storage-blob = "*"
 psycopg2-binary = "*"
+django-fontawesome-5 = "*"
 
 [requires]
 python_version = "3.8"

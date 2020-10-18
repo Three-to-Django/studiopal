@@ -8,7 +8,7 @@ from imagekit.models import ImageSpecField
 
 
 class User(AbstractUser):
-    name = models.CharField(max_length=100, null=True)
+    studio_name = models.CharField(max_length=100, null=True)
     profile_photo = models.ImageField(upload_to='profile_photo', null=True)
     image_medium = ImageSpecField(source='profile_photo',
                                             processors=[ResizeToFit(300, 300)], format='jpeg', options={'quality': 80})

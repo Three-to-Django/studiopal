@@ -45,11 +45,6 @@ def landing_page(request):
     videos = Video.objects.all()
     return render(request, "studiopal/landing_page.html", {"videos": videos})
 
-
-def homepage(request):
-    return render(request, "studiopal/homepage.html")
-
-
 def add_comment(request, video_pk):
     video = get_object_or_404(Video, pk=video_pk)
     if request.method == "POST":
@@ -70,7 +65,7 @@ def delete_comment(request, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
     if request.method == "POST":
         comment.delete()
-        return redirect(to="homepage")
+        return redirect(to="landing_page")
     return render(request, "studiopal/delete_comment.html", {"comment": comment})
 
 

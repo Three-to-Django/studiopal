@@ -22,7 +22,7 @@ class InstructorForm(forms.ModelForm):
     class Meta:
         model = User
         fields = [
-            "name",
+            "studio_name",
             "profile_photo",
             "bio",
         ]

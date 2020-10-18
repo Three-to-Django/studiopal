@@ -1,110 +1,56 @@
 {% extends 'base.html' %} {% block content %}
-
-
-<div class="categories">
-  <section class="category-selection">
-    <button class="category">All</button>
-    <button class="category">Category 1</button>
-    <button class="category">Category 2</button>
-    <button class="category">Category 3</button>
-    <button class="category">Category 4</button>
-    <button class="category">Category 5</button>
-    <button class="category">Category 6</button>
-    <button class="category">Category 7</button>
-    <button class="category">Category 8</button>
-    <button class="category">Category 9</button>
-  </section>
+{% load fontawesome_5 %}
+{% load static %}
+<div>
+<div class="container">
+<div style="display: flex; flex-direction: row; margin-top: 50px; margin-bottom: 50px">
+  <img style="width: 650px" src="{% static 'img/studio_pal_hero_bike.png'%}">
+  <div style="display: flex; flex-direction: column; margin-left: -150px">
+    <h2 style="font-family: Playfair Display; color: #6767f6;">Cupcakes fixie herald sun the indy nccu art of cool.</h2>
+    <span style="font-family: Open sans; font-weight: 400; color: #323140; font-size: 20px">Blues french press the state of things northgate park.</span>
+  </div>
 </div>
-<div class="videos">
-  <section class="video-section">
-    <h2 class="video-section-title">Workout videos</h2>
-    <button class="video-section-title-close">&times;</button>
-    <article class="video-container">
+  <h4 style="padding-left: 10px; font-family: Open Sans; font-weight: 800; color: #6767f6 ">Latest Sessions</h4>
+  <section>
+    <div class="row">
       {% for video in videos %}
-      <a href="{% url 'video_detail' video_pk=video.pk %}" class="thumbnail">
-        <img
-          class="thumbnail-image"
-          src="http://unsplash.it/250/150?gravity=center"
-        />
-      </a>
-      <div class="video-bottom-section">
-        <a href="{% url 'video_detail' video_pk=video.pk %}">
-          <img
-            class="channel-icon"
-            src="http://unsplash.it/36/36?gravity=center"
-          />
-        </a>
-        <div class="video-details">
-          <a
-            href="{% url 'video_detail' video_pk=video.pk %}"
-            class="video-title"
-            >VideoTitle</a
-          >
-          <a href="" class="video-channel-name">Channel Name</a>
-          <div class="video-meta-data">
-            <span>upvotes</span>
-            <span>pub_date</span>
+      <div class="col m4">
+          <div class="card">
+            <div class="card-image">
+              <img src="http://unsplash.it/250/150?gravity=center">
+            </div>
+            <div class="card-content row" style="line-height: 18px">
+              <img class="col s3 circle" src="http://unsplash.it/250/150?gravity=center" style="height: 50px; margin-right: 15px">
+              <div class="col s8" style="padding: 0px">
+                <a href="{% url 'video_detail' video_pk=video.pk %}"><span  class="truncate" style="font-family: Open Sans; font-weight: 700;">Nccu historic preservation oprah building gritty preservation oprah building gritty</span>
+                <p style="font-size: 12px; color: #424242" >Mar 16 2020</p>
+                <p style="color: #424242; margin-top: 5px; font-size: 13.5px;">Studio Name • 19K views <span style="font-size: 11px">{% fa5_icon 'eye' %}</span></p>
+              </div></a>
+            </div>
           </div>
-        </div>
       </div>
       {% endfor %}
-    </article>
+  </div>
   </section>
-  <section class="video-section">
-    <h2 class="video-section-title">Recommended videos</h2>
-    <button class="video-section-title-close">&times;</button>
-    <article class="video-container">
-      <a href="#" class="thumbnail">
-        <img
-          class="thumbnail-image"
-          src="http://unsplash.it/250/150?gravity=center"
-        />
-      </a>
-      <div class="video-bottom-section">
-        <a href="#">
-          <img
-            class="channel-icon"
-            src="http://unsplash.it/36/36?gravity=center"
-          />
-        </a>
-        <div class="video-details">
-          <a href="#" class="video-title">VideoTitle</a>
-          <a href="" class="video-channel-name">Channel Name</a>
-          <div class="video-meta-data">
-            <span>upvotes</span>
-            <span>pub_date</span>
+  <section>
+  <h4 style="padding-left: 10px; font-family: Open Sans; font-weight: 800; color: #6767f6 ">Favorite Sessions</h4>
+    <div class="row">
+      <div class="col m4">
+        <div class="card">
+            <div class="card-image">
+              <img src="http://unsplash.it/250/150?gravity=center">
+            </div>
+            <div class="card-content row" style="line-height: 18px">
+              <img class="col s3 circle" src="http://unsplash.it/250/150?gravity=center" style="height: 50px; margin-right: 15px">
+              <div class="col s8" style="padding: 0px">
+                <span class="truncate" style="font-family: Open Sans; font-weight: 700;">Nccu historic preservation oprah building gritty preservation oprah building gritty</span>
+                <p style="font-size: 12px; color: #424242" >Mar 16 2020</p>
+                <p style="color: #424242; margin-top: 5px; font-size: 13.5px;">Studio Name • 19K views <span style="font-size: 11px">{% fa5_icon 'eye' %}</span></p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </article>
-  </section>
-  <section class="video-section">
-    <h2 class="video-section-title">Liked Videos</h2>
-    <button class="video-section-title-close">&times;</button>
-    <article class="video-container">
-      <a href="#" class="thumbnail">
-        <img
-          class="thumbnail-image"
-          src="http://unsplash.it/250/150?gravity=center"
-        />
-      </a>
-      <div class="video-bottom-section">
-        <a href="#">
-          <img
-            class="channel-icon"
-            src="http://unsplash.it/36/36?gravity=center"
-          />
-        </a>
-        <div class="video-details">
-          <a href="#" class="video-title">VideoTitle</a>
-          <a href="" class="video-channel-name">Channel Name</a>
-          <div class="video-meta-data">
-            <span>upvotes</span>
-            <span>pub_date</span>
-          </div>
-        </div>
-      </div>
-    </article>
+    </div>
   </section>
 </div>
 {% endblock %}
