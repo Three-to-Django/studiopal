@@ -173,6 +173,7 @@ AZURE_MEDIA_LOCATION = "media"
 DEFAULT_FILE_STORAGE = "studiopal.backend.AzureMediaStorage"
 STATICFILES_STORAGE = "studiopal.backend.AzureStaticStorage"
 
+AZURE_STORAGE_KEY = os.environ.get("AZURE_STORAGE_KEY", False)
 AZURE_ACCOUNT_NAME = "studiopal"
 AZURE_CUSTOM_DOMAIN = f"{AZURE_ACCOUNT_NAME}.blob.core.windows.net"
 STATIC_URL = f"https://{AZURE_CUSTOM_DOMAIN}/{AZURE_STATIC_LOCATION}/"
