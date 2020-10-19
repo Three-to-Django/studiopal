@@ -167,9 +167,11 @@ STATIC_LOCATION = "static"
 MEDIA_LOCATION = "media"
 
 
-DEFAULT_FILE_STORAGE = "storages.backends.azure_storage.AzureStorage"
-STATICFILES_STORAGE = "storages.backends.azure_storage.AzureStorage"
+# DEFAULT_FILE_STORAGE = "storages.backends.azure_storage.AzureStorage"
+# STATICFILES_STORAGE = "storages.backends.azure_storage.AzureStorage"
 
+DEFAULT_FILE_STORAGE = "studiopal.backend.AzureMediaStorage"
+STATICFILES_STORAGE = "studiopal.backend.AzureStaticStorage"
 
 AZURE_ACCOUNT_NAME = "studiopal"
 AZURE_CUSTOM_DOMAIN = f"{AZURE_ACCOUNT_NAME}.blob.core.windows.net"
