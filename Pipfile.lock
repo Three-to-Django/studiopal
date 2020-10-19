@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "9b3c5b0745003a13b921d00780853a7fcfe051ad08e7750554ab38d97313d9f2"
+            "sha256": "509d057253867a59a81845b5cdf07f2e6f21ad76a323ebda0ae3c4eec9a39eeb"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -44,6 +44,7 @@
                 "sha256:ce0f1013e6d0e9faebaf3188cc069f4892fc60a6ec552e3f817c1a2f92835054",
                 "sha256:fd02e4256dc9cdd2d4422bc795bdca2ef302f7a86148b154fbf4ea1f09da400a"
             ],
+            "index": "pypi",
             "version": "==1.1.25"
         },
         "azure-core": {
