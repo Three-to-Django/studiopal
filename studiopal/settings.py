@@ -39,6 +39,8 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "studiopal-webapp.azurewebsites.net",
     "169.254.129.4",
+    "169.254.129.3",
+    "169.254.129.1",
     "localhost",
     "127.0.0.1",
 ]
@@ -109,6 +111,7 @@ DATABASES = {
         "PASSWORD": env("DATABASE_PASSWORD"),
         "HOST": env("DATABASE_HOST"),
         "PORT": env("DATABASE_PORT"),
+        "SSLMODE": env("SSLMODE"),
     }
 }
 
