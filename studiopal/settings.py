@@ -170,9 +170,6 @@ AZURE_STATIC_LOCATION = "static"
 AZURE_MEDIA_LOCATION = "media"
 
 
-# DEFAULT_FILE_STORAGE = "storages.backends.azure_storage.AzureStorage"
-# STATICFILES_STORAGE = "storages.backends.azure_storage.AzureStorage"
-
 DEFAULT_FILE_STORAGE = "studiopal.backend.AzureMediaStorage"
 STATICFILES_STORAGE = "studiopal.backend.AzureStaticStorage"
 

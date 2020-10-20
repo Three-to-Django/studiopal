@@ -1,7 +1,6 @@
 {% extends 'base.html' %} 
 {% block content %}
 {% load static %}
-
 <div class="container">
 <div class="row">
   <video class="col s12" controls>
@@ -46,12 +45,13 @@
       </div>
     </div>
   {% endfor %} 
+  {% endif %}
+  {% if user.is_authenticated %}
+    <form action="{% url 'add_comment' video_pk=video.pk %}" method="POST">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit" class="btn">Add Comment</button>
+    </form>
 {% endif %}
-<form action="{% url 'add_comment' video_pk=video.pk %}" method="POST">
-  {% csrf_token %} {{ form.as_p }}
-
-  <button type="submit" class="btn">Add Comment</button>
-</form>
 </div>
 
 {% endblock %}

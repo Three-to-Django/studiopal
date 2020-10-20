@@ -8,6 +8,7 @@ from .models import User, Video, Comment
 from .forms import InstructorForm, VideoForm, CommentsForm
 
 
+@login_required
 def video_upload(request):
     if request.method == "POST":
         form = VideoForm(request.POST, request.FILES)
@@ -30,6 +31,7 @@ def landing_page(request):
     return render(request, "studiopal/landing_page.html", {"videos": videos})
 
 
+@login_required
 def add_comment(request, video_pk):
     video = get_object_or_404(Video, pk=video_pk)
     if request.method == "POST":
@@ -54,6 +56,7 @@ def delete_comment(request, comment_pk):
     return render(request, "studiopal/delete_comment.html", {"comment": comment})
 
 
+@login_required()
 def add_instructor_info(request, user_pk):
     user = get_object_or_404(User.objects.all(), pk=user_pk)
     if request.method == "POST":
@@ -68,9 +71,11 @@ def add_instructor_info(request, user_pk):
     )
 
 
+@login_required
 def instructor_detail(request, user_pk):
     user = get_object_or_404(User.objects.all(), pk=user_pk)
     return render(request, "studiopal/instructor_detail.html", {"user": user})
+
 
 def about(request):
     return render(request, "studiopal/about.html")
