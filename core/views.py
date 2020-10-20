@@ -71,3 +71,6 @@ def add_instructor_info(request, user_pk):
 def instructor_detail(request, user_pk):
     user = get_object_or_404(User.objects.all(), pk=user_pk)
     return render(request, "studiopal/instructor_detail.html", {"user": user})
+
+def about(request):
+    return render(request, "studiopal/about.html")

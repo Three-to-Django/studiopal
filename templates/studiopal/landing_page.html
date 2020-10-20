@@ -1,30 +1,34 @@
 {% extends 'base.html' %} {% block content %}
 {% load fontawesome_5 %}
 {% load static %}
+
 <div>
 <div class="container">
-<div style="display: flex; flex-direction: row; margin-top: 50px; margin-bottom: 50px">
-  <img style="width: 650px" src="{% static 'img/studio_pal_hero_bike.png'%}">
-  <div style="display: flex; flex-direction: column; margin-left: -150px">
-    <h2 style="font-family: Playfair Display; color: #6767f6;">Cupcakes fixie herald sun the indy nccu art of cool.</h2>
-    <span style="font-family: Open sans; font-weight: 400; color: #323140; font-size: 20px">Blues french press the state of things northgate park.</span>
+<div id="hero-img-container" class="row">
+  <img class="col s10" id="hero-img" src="{% static 'img/studio_pal_hero_bike.png'%}">
+  <div class="col s6" id="hero-copy-container">
+    <h2 id="cta-title">With StudioPal your home is your fitness studio.</h2>
+    <span id="cta-subtitle">Stay safe, stay fit, stay connected.</span>
+    <a  href="{% url 'about' %}" class="col s6 waves-light btn">Learn more</a>
   </div>
 </div>
-  <h4 style="padding-left: 10px; font-family: Open Sans; font-weight: 800; color: #6767f6 ">Latest Sessions</h4>
   <section>
+   <h5 style="margin-top: 100px">Latest Sessions</h5>
     <div class="row">
       {% for video in videos %}
       <div class="col m4">
           <div class="card">
             <div class="card-image">
-              <img src="http://unsplash.it/250/150?gravity=center">
+              <a href="{% url 'video_detail' video_pk=video.pk %}">
+                <img src="http://unsplash.it/250/150?gravity=center">
+              </a>
             </div>
-            <div class="card-content row" style="line-height: 18px">
-              <img class="col s3 circle" src="http://unsplash.it/250/150?gravity=center" style="height: 50px; margin-right: 15px">
-              <div class="col s8" style="padding: 0px">
-                <a href="{% url 'video_detail' video_pk=video.pk %}"><span  class="truncate" style="font-family: Open Sans; font-weight: 700;">Nccu historic preservation oprah building gritty preservation oprah building gritty</span>
-                <p style="font-size: 12px; color: #424242" >Mar 16 2020</p>
-                <p style="color: #424242; margin-top: 5px; font-size: 13.5px;">Studio Name • 19K views <span style="font-size: 11px">{% fa5_icon 'eye' %}</span></p>
+            <div class="card-content row">
+              <img class="col s3 left" id="video-card-avatar" src="{{ 'user.image_medium.url' }}">
+              <div class="col s8 right" style="padding: 0px">
+                <span class="truncate" id="video-card-title" >{{ video.title }}</span>
+                <p id="video-card-date" >Mar 16 2020</p>
+                <p id="video-card-details">{{ video.creator }} • 19K views <span>{% fa5_icon 'eye fa-sm' %}</span></p>
               </div></a>
             </div>
           </div>
@@ -32,25 +36,26 @@
       {% endfor %}
   </div>
   </section>
-  <section>
-  <h4 style="padding-left: 10px; font-family: Open Sans; font-weight: 800; color: #6767f6 ">Favorite Sessions</h4>
+  {% comment %} <section>
+  <h5>Favorite Sessions</h5>
     <div class="row">
       <div class="col m4">
         <div class="card">
-            <div class="card-image">
+          <div class="card-image">
+            <a href="#">
               <img src="http://unsplash.it/250/150?gravity=center">
-            </div>
-            <div class="card-content row" style="line-height: 18px">
-              <img class="col s3 circle" src="http://unsplash.it/250/150?gravity=center" style="height: 50px; margin-right: 15px">
-              <div class="col s8" style="padding: 0px">
-                <span class="truncate" style="font-family: Open Sans; font-weight: 700;">Nccu historic preservation oprah building gritty preservation oprah building gritty</span>
-                <p style="font-size: 12px; color: #424242" >Mar 16 2020</p>
-                <p style="color: #424242; margin-top: 5px; font-size: 13.5px;">Studio Name • 19K views <span style="font-size: 11px">{% fa5_icon 'eye' %}</span></p>
-              </div>
-            </div>
+            </a>
           </div>
-        </div>
+          <div class="card-content row">
+            <img class="col s3 left" id="video-card-avatar" src="http://unsplash.it/250/150?gravity=center">
+            <div class="col s8 right" style="padding: 0px">
+              <span  class="truncate" id="video-card-title">Nccu historic preservation oprah building gritty preservation oprah building gritty</span>
+              <p id="video-card-date" >Mar 16 2020</p>
+              <p id="video-card-details">Studio Name • 19K views <span>{% fa5_icon 'eye fa-sm' %}</span></p>
+            </div></a>
+          </div>
+      </div>
     </div>
   </section>
-</div>
+</div> {% endcomment %}
 {% endblock %}

@@ -3,24 +3,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	{% load static %}
 	{% fontawesome_5_static %}
+	{% load static %}
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-	<script src={% static 'js/script.js'%}></script>
+	<link rel="stylesheet" href="{% static 'css/materialize.css'%}">
+	<link rel="stylesheet" href="{% static 'css/materialize.min.css'%}">
+	<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&family=Playfair+Display:wght@900&display=swap">
+	<script src="{% static 'css/materialize.js'%}"></script>
+	<script src="{% static 'css/materialize.js'%}"></script>
+	<script defer src={% static '/js/script.js'%}></script>
 	<title>{% block title %}StudioPal{% endblock %}</title>
 </head>
   <body>
-		<nav style="background: #6767f6">
+		<nav>
 			<div class="nav-wrapper">
 				<a href="{% url 'landing_page' %}" class="brand-logo">
-					<div style="padding-left: 15px;">
-						<span style="font-family: Playfair Display; font-weight: 900;">Studio</span><span style="font-family: Open Sans; font-weight: 300; font-size: 28px;">Pal</span>
+					<div id="logo-container">
+						<span id="logo-studio">Studio</span><span id="logo-pal">Pal.</span>
 					</div>
 				</a>
 				<ul class="right hide-on-med-and-down">
@@ -36,27 +37,30 @@
 						</a>
 					</li>
 				{% else %}
-					<li style="margin-right: 65px">
-						<div style="display: flex; align-items: center;">
-							<div style="height: 35px; width: 35px; background: white; margin-right: 15px; border-radius: 50%;">
+					<li id="nav-item-username">
+						<div class="nav-item-with-icon-container">
+						{% comment %} TODO: if user has studio / is instructor show avatar {% endcomment %}
+							<div id="avatar">
 							</div>
 							Hey, {{ user.username }}!
 						</div>
 					</li>
 					<li class="row">
-						<div class="input-field" style="display: flex; align-items: center">
-							<span style="margin-right: 5px">{% fa5_icon 'search' %}</span>
-							<input style="padding: 0px; border-bottom: 1.7px solid white;" class="validate" id="search" type="search" placeholder="search" required>
+						<div class="input-field nav-item-with-icon-container">
+							<span>{% fa5_icon 'search fa-sm' %}</span>
+							<input id="search" type="search" placeholder="search" required>
 						</div>
-					<li>
+					</li>
+					{% if studio_name is not null %}
 					<li>
 					<a href="{% url 'add_instructor_info' user_pk=user.pk %}">
-						<div style="display: flex; align-items: center">
-							<span style="margin-right: 5px">{% fa5_icon 'chalkboard-teacher' %}</span>
+						<div class="nav-item-with-icon-container">
+							<span>{% fa5_icon 'chalkboard-teacher fa-sm' %}</span>
 							Create studio
 						</div>
 					</a>
 					</li>
+					{% endif %}
 					<li><a href="{% url 'auth_logout' %}">Logout</a></li>
 				</ul>
 				{% endif %}

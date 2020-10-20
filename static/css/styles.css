@@ -1,17 +1,146 @@
 *, *::before, *::after {
     box-sizing: border-box;
-    font-family: Arial;
 }
 
+/* Global Styles */
 
-.avatar {
-    width: 35px;
-    height: 35px;
+body, html {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+}
+
+nav {
+    background: #6767f6;
+    color: #ffffff;
+}
+
+h2 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
+    color: #6767f6;
+}
+
+/* base.html */
+
+#avatar {
+    height: 35px; 
+    width: 35px; 
+    background: white; 
+    margin-right: 10px; 
     border-radius: 50%;
+}
+
+#logo-container {
+    padding-left: 15px;
+}
+
+#logo-studio {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+}
+
+#logo-pal {
+    font-family: 'Open sans', serif;
+    font-weight: 300;
+    font-size: 28px;
+}
+
+#nav-search-container {
+    display: flex; 
+    align-items: center;
+}
+
+#nav-item-username {
+    margin-right: 65px;
+}
+
+#search {
+    padding: 0px; 
+    border-bottom: 1.7px solid white;
+}
+
+.nav-item-with-icon-container {
+    display: flex;
+    align-items: center;
+}
+
+div.nav-item-with-icon-container > span {
     margin-right: 10px;
 }
 
-.username-container {
-    display: flex;
-    align-items: center;
+/* landing_page.html */
+section > h5 {
+    padding-left: 10px; font-family: Open Sans; font-weight: 800; color: #6767f6;
+    font-size: 26px;
+}
+#video-card-title {
+    font-family: 'Open sans', sans-serif; 
+    font-weight: 700;
+}
+
+#video-card-avatar {
+    height: 55px;
+    width: 27%; 
+    border-radius: 50%;
+}
+
+#video-card-date {
+    font-family: 'Open sans', sans-serif; 
+    font-weight: 400;
+    font-size: 12px;
+    color: #616161;
+}
+
+#video-card-details {
+    color: #424242; 
+    margin-top: 5px; 
+    font-size: 13.5px;
+}
+
+#hero-img-container {
+    display: flex; 
+    flex-direction: row; 
+    margin-top: 50px; 
+    margin-bottom: 50px;
+}
+
+#hero-copy-container {
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    margin-left: -250px;
+    line-height: 0px;
+}
+
+#cta-title {
+    font-family: 'Playfair Display', serif; 
+    color: #6767f6;
+    width: 500px;
+}
+
+#cta-subtitle {
+    font-family: Open sans; 
+    font-weight: 600; 
+    color: #323140; 
+    font-size: 16px;
+}
+
+div.card-content {
+    line-height: 18px;
+}
+
+#hero-copy-container > a {
+    margin: 20px 0;
+    background: transparent;
+    border: 2px solid #6767f6;
+    color: #6767f6;
+    font-weight: 600;
+}
+
+/*  video_detail.html */
+
+video {
+    background: #424242;
+    width: 75%;
+    height: 550px;
 }

@@ -29,6 +29,7 @@ psycopg2-binary = "*"
 django-fontawesome-5 = "*"
 uvicorn = "*"
 azure-common = "*"
+django-materializecss-form = "*"
 
 [requires]
 python_version = "3.8"
