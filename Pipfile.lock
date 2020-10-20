@@ -212,6 +212,13 @@
             ],
             "version": "==1.0.4"
         },
+        "django-comments-dab": {
+            "hashes": [
+                "sha256:5b7795212fe4455be72ba8ce51b200bb106f3bfc621da81d9f2576794eb0b7ed"
+            ],
+            "index": "pypi",
+            "version": "==2.0.0"
+        },
         "django-debug-toolbar": {
             "hashes": [
                 "sha256:a1ce0665f7ef47d27b8df4b5d1058748e1f08500a01421a30d35164f38aaaf4c",

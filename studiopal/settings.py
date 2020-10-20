@@ -55,10 +55,12 @@ INSTALLED_APPS = [
     "django_extensions",
     "storages",
     # Project-specific
+    
     "core",
     "users",
     "imagekit",
     "taggit",
+    
 ]
 
 MIDDLEWARE = [

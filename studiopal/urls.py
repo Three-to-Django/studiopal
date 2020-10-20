@@ -32,7 +32,6 @@ urlpatterns = [
         views.video_detail,
         name="video_detail",
     ),
-    path('studiopal/delete_comment/<int:comment_pk>/', views.delete_comment, name='delete_comment'),
     path("", views.landing_page, name="landing_page"),
     path("studiopal/about/", views.about, name='about')
 

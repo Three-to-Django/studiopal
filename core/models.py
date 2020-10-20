@@ -5,7 +5,6 @@ from django.db import models
 
 from imagekit.models import ImageSpecField
 from taggit.managers import TaggableManager
-
 from users.models import User
 
 # Create your models here.

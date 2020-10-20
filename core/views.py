@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
 from django.views import View
-from django.contrib.auth.decorators import login_required
-import os, uuid
-
-# from .forms import  VideoForm, CommentsForm
 from .models import User, Video, Comment
 from .forms import InstructorForm, VideoForm, CommentsForm
+import json
+from django.contrib.auth.decorators import login_required
 
 
 @login_required
@@ -34,26 +33,18 @@ def landing_page(request):
 @login_required
 def add_comment(request, video_pk):
     video = get_object_or_404(Video, pk=video_pk)
+    user = request.user
     if request.method == "POST":
-        form = VideoForm()
-        form = CommentsForm(data=request.POST)
-        if form.is_valid():
-            comments = form.save(commit=False)
-            comments.author = request.user
-            comments.video = video
-            comments.save()
-            return redirect(to="video_detail", video_pk=video_pk)
-    return render(
-        request, "studiopal/video_detail.html", {"form": form, "video": video}
-    )
-
-
-def delete_comment(request, comment_pk):
-    comment = get_object_or_404(Comment, pk=comment_pk)
-    if request.method == "POST":
-        comment.delete()
-        return redirect(to="landing_page")
-    return render(request, "studiopal/delete_comment.html", {"comment": comment})
+        comment_json = json.loads(request.body)
+        comment = comment_json["text"]
+        new_comment = Comment(text=comment, author=user, video=video)
+        new_comment.save()
+        html = (
+            f'<p class="comment-text">{new_comment.text}</p>'
+            f'<p class="comment-author">by <span class="font-weight-bold">{user.username}</span>'
+            f"</p>"
+        )
+    return JsonResponse({"html": html})
 
 
 @login_required()

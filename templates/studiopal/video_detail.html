@@ -28,30 +28,59 @@
 </div>
 </div>
 
-<div class="row">
-{% if comment is None %}
-  {% for comment in video.comments.all reversed %}
-    <p>{{ comment.text }}</p>
-    <p>{{comment.author}}<span> | </span>{{comment.pub_date}}</p>
-    <a href="{% url 'delete_comment' comment_pk=comment.pk %}">
-      <button>Delete</button>
-    </a>
-  {% empty %}
-    <div class="col s12" style="padding: 0px">
-      <div class="card">
-        <div class="card-content">
-          <p>There are no comments yet.</p>
+<div id="comments-container" class="pt4 ml5 mb4">
+    {% for comment in video.comments.all reversed %}
+        <div class="comment" style="padding: 10px;">
+            <p class="comment-text">{{ comment.text }}</p>
+            <p class="comment-date">{{comment.pub_date}}</p>
+            <p class="comments-author">by <span class="font-weight-bold">{{ comment.author }}</span>
+            </p>
         </div>
-      </div>
-    </div>
-  {% endfor %} 
-  {% endif %}
-  {% if user.is_authenticated %}
-    <form action="{% url 'add_comment' video_pk=video.pk %}" method="POST">
-    {% csrf_token %} {{ form.as_p }}
-    <button type="submit" class="btn">Add Comment</button>
-    </form>
-{% endif %}
+    {% endfor %}
 </div>
 
+<div class="comment-form">
+    {% csrf_token %}
+    <textarea id="comment-form"></textarea>
+    <button id="comment-button">Add Comments</button>
+</div>
+
+
+
+<script>
+    const commentButton = document.querySelector("#comment-button")
+
+    commentButton.addEventListener("click", function(){
+        console.log("button clicked")
+        const csrfToken = document.querySelector("input[name='csrfmiddlewaretoken']").value
+        let commentInput = document.getElementById("comment-form")
+        const videoID =  {{ video.pk }}
+        fetch(`/studiopal/add_comment/${videoID}/`, {
+            method: 'POST',
+            body: JSON.stringify({"text": commentInput.value }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                'X-CSRFToken': csrfToken
+            }
+        })
+        .then(res => res.json())
+            .then(data => {
+                console.log("Response returned")
+                console.log(data)
+                const commentsContainer = document.querySelector('#comments-container')
+                const newDiv = document.createElement("div")
+                newDiv.className="comment"
+                newDiv.style="padding: 10px;"
+                newDiv.innerHTML = data.html
+                commentsContainer.appendChild(newDiv)
+                commentInput.value =''
+            })
+        })
+
+
+</script>
+
+
 {% endblock %}
+
+
