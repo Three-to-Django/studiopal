@@ -52,13 +52,16 @@
               <input id="search" type="search" placeholder="search" required />
             </div>
           </li>
-          {% if user.studio_name %} <>
-          <a href="{% url 'add_instructor_info' user_pk=user.pk %}">
-            <div class="nav-item-with-icon-container">
-              <span>{% fa5_icon 'chalkboard-teacher fa-sm' %}</span>
-              Edit Studio
-            </div>
-          </a>
+          {% if user.studio_name %}
+          <li>
+            <a href="{% url 'add_instructor_info' user_pk=user.pk %}">
+              <div class="nav-item-with-icon-container">
+                <span>{% fa5_icon 'chalkboard-teacher fa-sm' %}</span>
+                Edit Studio
+              </div>
+            </a>
+          </li>
+
           <li>
             <a href="{% url 'instructor_detail' user_pk=user.pk %}">
               <div class="nav-item-with-icon-container">
