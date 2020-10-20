@@ -38,6 +38,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "studiopal-webapp.azurewebsites.net",
+    "169.254.129.4",
     "localhost",
     "127.0.0.1",
 ]
