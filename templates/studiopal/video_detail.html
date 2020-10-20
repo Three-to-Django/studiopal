@@ -1,53 +1,50 @@
-{% extends 'base.html' %} 
-{% block content %}
-{% load static %}
+{% extends 'base.html' %} {% block content %} {% load static %}
 <div class="container">
-<div class="row">
-  <video class="col s12" controls>
-        <source src="{{ video.video.url }}" type="video/mp4" />
-        <source src="{{ video.video.url }}" type="video/x-flv" />
-        <source src="{{ video.video.url }}" type="video/MP2T" />
-        <source src="{{ video.video.url }}" type="video/3gpp" />
-        <source src="{{ video.video.url }}" type="video/3gpp2" />
-        <source src="{{ video.video.url }}" type="video/3gpp-tt" />
-        <source src="{{ video.video.url }}" type="video/quicktime" />
-        <source src="{{ video.video.url }}" type="video/x-msvideo" />
-        <source src="{{ video.video.url }}" type="video/x-ms-wmv" />
-        <source src="{{ video.video.url }}" type="video/webm" />
-        <source src="{{ video.video.url }}" type="video/ogg" />
-        <source src="{{ video.video.url }}" type="video/H264" />
-        <source src="{{ video.video.url }}" type="video/H264-RCDO" />
-        <source src="{{ video.video.url }}" type="video/H264-SVC" />
+  <div class="row">
+    <video class="col s12" controls>
+      <source src="{{ video.video.url }}" type="video/mp4" />
+      <source src="{{ video.video.url }}" type="video/x-flv" />
+      <source src="{{ video.video.url }}" type="video/MP2T" />
+      <source src="{{ video.video.url }}" type="video/3gpp" />
+      <source src="{{ video.video.url }}" type="video/3gpp2" />
+      <source src="{{ video.video.url }}" type="video/3gpp-tt" />
+      <source src="{{ video.video.url }}" type="video/quicktime" />
+      <source src="{{ video.video.url }}" type="video/x-msvideo" />
+      <source src="{{ video.video.url }}" type="video/x-ms-wmv" />
+      <source src="{{ video.video.url }}" type="video/webm" />
+      <source src="{{ video.video.url }}" type="video/ogg" />
+      <source src="{{ video.video.url }}" type="video/H264" />
+      <source src="{{ video.video.url }}" type="video/H264-RCDO" />
+      <source src="{{ video.video.url }}" type="video/H264-SVC" />
     </video>
-  <h3>{{ video.title }}</h3>
-  <p>published date</p>
-  <p>{{ video.description }}</p>
-  <p>{{ video.creator }}</p>
-  <div class"card-img">
-    <img src="{{ user.image_medium.url }}">
-</div>
-</div>
+    <h3>{{ video.title }}</h3>
+    <p>published date</p>
+    <p>{{ video.description }}</p>
+    <p>{{ video.creator }}</p>
+    <div class="card-img">
+      <img src="{{ user.image_medium.url }}" />
+    </div>
+  </div>
 
-<div id="comments-container" class="pt4 ml5 mb4">
+  <div id="comments-container" class="pt4 ml5 mb4">
     {% for comment in video.comments.all reversed %}
-        <div class="comment" style="padding: 10px;">
-            <p class="comment-text">{{ comment.text }}</p>
-            <p class="comment-date">{{comment.pub_date}}</p>
-            <p class="comments-author">by <span class="font-weight-bold">{{ comment.author }}</span>
-            </p>
-        </div>
+    <div class="comment" style="padding: 10px;">
+      <p class="comment-text">{{ comment.text }}</p>
+      <p class="comment-date">{{comment.pub_date}}</p>
+      <p class="comments-author">
+        by <span class="font-weight-bold">{{ comment.author }}</span>
+      </p>
+    </div>
     {% endfor %}
-</div>
+  </div>
 
-<div class="comment-form">
+  <div class="comment-form">
     {% csrf_token %}
     <textarea id="comment-form"></textarea>
     <button id="comment-button">Add Comments</button>
-</div>
+  </div>
 
-
-
-<script>
+  <script>
     const commentButton = document.querySelector("#comment-button")
 
     commentButton.addEventListener("click", function(){
@@ -76,11 +73,7 @@
                 commentInput.value =''
             })
         })
+  </script>
 
-
-</script>
-
-
-{% endblock %}
-
-
+  {% endblock %}
+</div>

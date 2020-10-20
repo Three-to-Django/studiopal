@@ -12,82 +12,77 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&family=Playfair+Display:wght@900&display=swap"
     />
-    <script src="{% static 'js/script.js'%}" defer></script>
     <script src="{% static 'js/materialize.js'%}"></script>
-    <script src="{% static 'js/materialize.min.js'%}"></script>
-
+    <script src="{% static 'js/materialize.js'%}"></script>
+    <script src="{% static 'js/script.js'%}" defer></script>
     <title>{% block title %}StudioPal{% endblock %}</title>
   </head>
   <body>
-		<nav>
-			<div class="nav-wrapper">
-				<a href="{% url 'landing_page' %}" class="brand-logo">
-					<div id="logo-container">
-						<span id="logo-studio">Studio</span><span id="logo-pal">Pal.</span>
-					</div>
-				</a>
-				<ul class="right hide-on-med-and-down">
-				{% if not user.is_authenticated %}
-					<li>
-						<a href="{% url 'auth_login' %}">
-							Login
-						</a>
-					</li>
-					<li>
-						<a href="{% url 'registration_register' %}">
-							Sign up
-						</a>
-					</li>
-				{% else %}
-					<li id="nav-item-username">
-						<div class="nav-item-with-icon-container">
-						{% comment %} TODO: if user has studio / is instructor show avatar {% endcomment %}
-							<div id="avatar">
-							</div>
-							Hey, {{ user.username }}!
-						</div>
-					</li>
-					<li class="row">
-						<div class="input-field nav-item-with-icon-container">
-							<span>{% fa5_icon 'search fa-sm' %}</span>
-							<input id="search" type="search" placeholder="search" required>
-						</div>
-					</li>
-					{% if user.studio_name %}
-						<li>
-						<a href="{% url 'add_instructor_info' user_pk=user.pk %}">
-						<div class="nav-item-with-icon-container">
-							<span>{% fa5_icon 'chalkboard-teacher fa-sm' %}</span>
-							Edit Studio
-						</div>
-					</a>
-						<li>
-						<a href="{% url 'instructor_detail' user_pk=user.pk %}">
-							<div class="nav-item-with-icon-container">
-								<span>{% fa5_icon 'chalkboard-teacher fa-sm' %}</span>
-								Upload a video
-							</div>
-						</a>
-						</li>
-					</li>
-						{% else %}
-							<li>
-							<a href="{% url 'add_instructor_info' user_pk=user.pk %}">
-							<div class="nav-item-with-icon-container">
-							<span>{% fa5_icon 'chalkboard-teacher fa-sm' %}</span>
-							Create Studio
-							</div>
-							</a>
-							</li>
-					{% endif %}
-					<li><a href="{% url 'auth_logout' %}">Logout</a></li>
-				</ul>
-				{% endif %}
-			</div>
-		</nav>
-		<div class="container">
-		</div>		
-		{% block content %} 
-		{% endblock %}
+    <nav>
+      <div class="nav-wrapper">
+        <a href="{% url 'landing_page' %}" class="brand-logo">
+          <div id="logo-container">
+            <span id="logo-studio">Studio</span><span id="logo-pal">Pal.</span>
+          </div>
+        </a>
+        <ul class="right hide-on-med-and-down">
+          {% if not user.is_authenticated %}
+          <li>
+            <a href="{% url 'auth_login' %}">
+              Login
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'registration_register' %}">
+              Sign up
+            </a>
+          </li>
+          {% else %}
+          <li id="nav-item-username">
+            <div class="nav-item-with-icon-container">
+              {% comment %} TODO: if user has studio / is instructor show avatar
+              {% endcomment %}
+              <div id="avatar"></div>
+              Hey, {{ user.username }}!
+            </div>
+          </li>
+          <li class="row">
+            <div class="input-field nav-item-with-icon-container">
+              <span>{% fa5_icon 'search fa-sm' %}</span>
+              <input id="search" type="search" placeholder="search" required />
+            </div>
+          </li>
+          {% if user.studio_name %} <>
+          <a href="{% url 'add_instructor_info' user_pk=user.pk %}">
+            <div class="nav-item-with-icon-container">
+              <span>{% fa5_icon 'chalkboard-teacher fa-sm' %}</span>
+              Edit Studio
+            </div>
+          </a>
+          <li>
+            <a href="{% url 'instructor_detail' user_pk=user.pk %}">
+              <div class="nav-item-with-icon-container">
+                <span>{% fa5_icon 'chalkboard-teacher fa-sm' %}</span>
+                Upload a video
+              </div>
+            </a>
+          </li>
+          {% else %}
+          <li>
+            <a href="{% url 'add_instructor_info' user_pk=user.pk %}">
+              <div class="nav-item-with-icon-container">
+                <span>{% fa5_icon 'chalkboard-teacher fa-sm' %}</span>
+                Create Studio
+              </div>
+            </a>
+          </li>
+          {% endif %}
+          <li><a href="{% url 'auth_logout' %}">Logout</a></li>
+        </ul>
+        {% endif %}
+      </div>
+    </nav>
+    <div class="container"></div>
+    {% block content %} {% endblock %}
   </body>
 </html>
