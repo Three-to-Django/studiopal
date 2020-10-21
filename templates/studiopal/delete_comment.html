@@ -1,19 +1,15 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
 
-{% block content %}
-
-<p> {{ user.username }}, Are you sure you would like to DELETE this comment "{{video.title }}"? </p>
+<p>
+  {{ user.username }}, Are you sure you would like to DELETE this comment
+  "{{video.title }}"?
+</p>
 
 <form action="{% url 'delete_comment' comment_pk=comment.pk %}" method="POST">
-    {% csrf_token %}
-    <div>
-        <button type="submit">yes</button>
-        </div>
-    </form>
-
+  {% csrf_token %}
+  <div>
+    <button type="submit">yes</button>
+  </div>
+</form>
 
 {% endblock %}
-
-
-
-

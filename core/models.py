@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.postgres.search import SearchVector
 
 # Create your models here.
 
@@ -7,8 +7,20 @@ from imagekit.models import ImageSpecField
 from taggit.managers import TaggableManager
 from users.models import User
 
+
+class VideoQuerySet(models.QuerySet):
+    def search(self):
+        video_results = self.annotate(
+            search=SearchVector(
+                "creator__studio_name", "creator__bio", "title", "description"
+            )
+        )
+        return video_results
+
+
 # Create your models here.
 class Video(models.Model):
+    objects = VideoQuerySet.as_manager()
     title = models.CharField(max_length=511)
     description = models.TextField(max_length=5000, blank=True)
     creator = models.ForeignKey(

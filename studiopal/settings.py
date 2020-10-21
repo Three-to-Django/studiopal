@@ -42,7 +42,6 @@ ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     "materializecssform",
-    "fontawesome_5",
     "registration",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -55,12 +54,10 @@ INSTALLED_APPS = [
     "django_extensions",
     "storages",
     # Project-specific
-    
     "core",
     "users",
     "imagekit",
     "taggit",
-    
 ]
 
 MIDDLEWARE = [

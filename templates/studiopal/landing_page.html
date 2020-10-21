@@ -1,61 +1,86 @@
-{% extends 'base.html' %} {% block content %}
-{% load fontawesome_5 %}
-{% load static %}
+{% extends 'base.html' %} {% block content %} {% load static %}
 
-<div>
 <div class="container">
-<div id="hero-img-container" class="row">
-  <img class="col s10" id="hero-img" src="{% static 'img/studio_pal_hero_bike.png'%}">
-  <div class="col s6" id="hero-copy-container">
-    <h2 id="cta-title">With StudioPal your home is your fitness studio.</h2>
-    <span id="cta-subtitle">Stay safe, stay fit, stay connected.</span>
-    <a  href="{% url 'about' %}" class="col s6 waves-light btn">Learn more</a>
+  <div id="hero-img-container" class="row">
+    <img
+      class="col s10"
+      id="hero-img"
+      src="{% static 'img/studio_pal_hero_bike.png'%}"
+    />
+    <div class="col s6" id="hero-copy-container">
+      <h2 id="cta-title">With StudioPal your home is your fitness studio.</h2>
+      <span id="cta-subtitle">Stay safe, stay fit, stay connected.</span>
+      <a href="{% url 'about' %}" class="col s6 waves-light btn">Learn more</a>
+    </div>
   </div>
-</div>
   <section>
-   <h5 style="margin-top: 100px">Latest Sessions</h5>
+    <h5 style="margin-top: 100px">Latest Sessions</h5>
     <div class="row">
       {% for video in videos %}
       <div class="col m4">
-          <div class="card">
-            <div class="card-image">
-              <a href="{% url 'video_detail' video_pk=video.pk %}">
-                <img src="http://unsplash.it/250/150?gravity=center">
-              </a>
-            </div>
-            <div class="card-content row">
-              <img class="col s3 left" id="video-card-avatar" src="{{ 'user.image_medium.url' }}">
-              <div class="col s8 right" style="padding: 0px">
-                <span class="truncate" id="video-card-title" >{{ video.title }}</span>
-                <p id="video-card-date" >Mar 16 2020</p>
-                <p id="video-card-details">{{ video.creator }} • 19K views <span>{% fa5_icon 'eye fa-sm' %}</span></p>
-              </div></a>
-            </div>
-          </div>
-      </div>
-      {% endfor %}
-  </div>
-  </section>
-  {% comment %} <section>
-  <h5>Favorite Sessions</h5>
-    <div class="row">
-      <div class="col m4">
         <div class="card">
           <div class="card-image">
-            <a href="#">
-              <img src="http://unsplash.it/250/150?gravity=center">
+            <a href="{% url 'video_detail' video_pk=video.pk %}">
+              <img src="http://unsplash.it/250/150?gravity=center" />
             </a>
           </div>
           <div class="card-content row">
-            <img class="col s3 left" id="video-card-avatar" src="http://unsplash.it/250/150?gravity=center">
+            {% if user.studio_name %}
+            <img
+              class="col s3 left"
+              id="video-card-avatar"
+              src="{{ user.image_medium.url }}"
+            />
+            {% else %} {% endif %}
             <div class="col s8 right" style="padding: 0px">
-              <span  class="truncate" id="video-card-title">Nccu historic preservation oprah building gritty preservation oprah building gritty</span>
-              <p id="video-card-date" >Mar 16 2020</p>
-              <p id="video-card-details">Studio Name • 19K views <span>{% fa5_icon 'eye fa-sm' %}</span></p>
-            </div></a>
+              <span class="truncate" id="video-card-title"
+                >{{ video.title }}</span
+              >
+              <p id="video-card-date">Mar 16 2020</p>
+              <p id="video-card-details">
+                {{ video.creator }} • 19K views
+              </p>
+            </div>
           </div>
+        </div>
       </div>
+      {% endfor %}
+
+      <section>
+        {% comment %}
+
+        <h5>Favorite Sessions</h5>
+        <div class="row">
+          <div class="col m4">
+            <div class="card">
+              <div class="card-image">
+                <a href="#">
+                  <img src="http://unsplash.it/250/150?gravity=center" />
+                </a>
+              </div>
+              <div class="card-content row">
+                <img
+                  class="col s3 left"
+                  id="video-card-avatar"
+                  src="http://unsplash.it/250/150?gravity=center"
+                />
+                <div class="col s8 right" style="padding: 0px">
+                  <span class="truncate" id="video-card-title"
+                    >Nccu historic preservation oprah building gritty
+                    preservation oprah building gritty</span
+                  >
+                  <p id="video-card-date">Mar 16 2020</p>
+                  <p id="video-card-details">
+                    Studio Name • 19K views
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endcomment %}
+        </div>
+      </section>
     </div>
   </section>
-</div> {% endcomment %}
+</div>
 {% endblock %}

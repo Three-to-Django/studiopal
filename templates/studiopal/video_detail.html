@@ -20,12 +20,12 @@
     <h3>{{ video.title }}</h3>
     <p>published date</p>
     <p>{{ video.description }}</p>
-    <p>{{ video.creator }}</p>
-    <div class="card-img">
+    {% if user.studio_name %}
+    <div class="card-img" border-radius:50%;>
       <img src="{{ user.image_medium.url }}" />
     </div>
+    {% endif %}
   </div>
-
   <div id="comments-container" class="pt4 ml5 mb4">
     {% for comment in video.comments.all reversed %}
     <div class="comment" style="padding: 10px;">
@@ -37,16 +37,13 @@
     </div>
     {% endfor %}
   </div>
-
   <div class="comment-form">
     {% csrf_token %}
     <textarea id="comment-form"></textarea>
     <button id="comment-button">Add Comments</button>
   </div>
-
   <script>
     const commentButton = document.querySelector("#comment-button")
-
     commentButton.addEventListener("click", function(){
         console.log("button clicked")
         const csrfToken = document.querySelector("input[name='csrfmiddlewaretoken']").value

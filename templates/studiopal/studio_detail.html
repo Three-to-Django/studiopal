@@ -1,0 +1,9 @@
+{% extends 'base.html' %} {% block content %}
+<img src="{{ user.image_medium.url }}" />
+
+{{ user.bio }}
+
+<a href="{% url 'video_upload' %}">
+  <p>Upload Video</p>
+</a>
+{% endblock %}
