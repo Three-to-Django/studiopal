@@ -148,3 +148,8 @@ video {
     width: 75%;
     height: 550px;
 }
+
+#studio_detail_username {
+    display: flex;
+    align-items: center;
+}

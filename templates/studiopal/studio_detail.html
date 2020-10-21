@@ -1,9 +1,48 @@
 {% extends 'base.html' %} {% block content %}
+<div>
 <img src="{{ user.image_medium.url }}" />
-
+</div>
+<div class="container">
+<h2>{{ user.username }}'s Studio</h2>
+</div>
+<div class="container" id="cta-subtitle">
 {{ user.bio }}
-
+</div>
+<div class="container">
 <a href="{% url 'video_upload' %}">
   <p>Upload Video</p>
 </a>
+</div>
+<h5 style="margin-top: 100px">Your Videos</h5>
+{% for video in user.videos.all %}
+   <section>
+    <div class="row">
+      <div class="col m4">
+        <div class="card">
+          <div class="card-image">
+            <a href="{% url 'video_detail' video_pk=video.pk %}">
+              <img src="http://unsplash.it/250/150?gravity=center" />
+            </a>
+          </div>
+          <div class="card-content row">
+            {% if user.studio_name %}
+            <img
+              class="col s3 left"
+              id="video-card-avatar"
+              src="{{ user.image_medium.url }}"
+            />
+            {% else %} {% endif %}
+            <div class="col s8 right" style="padding: 0px">
+              <span class="truncate" id="video-card-title"
+                >{{ video.title }}</span
+              >
+              <p id="video-card-date">Mar 16 2020</p>
+              <p id="video-card-details">
+                {{ video.creator }} • 19K views
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+{% endfor %}
 {% endblock %}
