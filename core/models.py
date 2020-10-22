@@ -36,10 +36,6 @@ class Video(models.Model):
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-
-    def save(self, *args, **kwargs):
-        self.url = slugify(self.title)
-        super(Video, self).save(*args, **kwargs)
         
     def __str__(self):
         return self.title

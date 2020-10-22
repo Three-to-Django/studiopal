@@ -97,47 +97,77 @@ def user_detail(request, user_pk):
 
 @login_required
 def video_preference(request, video_id, userpreference):
-    if request.method == 'POST':
-        video=get_object_or_404(Video, pk=video_id)
         
-        # obj="
-        # valueobj="
+    if request.method == "POST":
+        video= get_object_or_404(Video, id=video_id)
+
+        obj=''
+
+        valueobj=''
 
         try:
-            obj=Preference.objects.get(user=request.user, video=video)
-            valueobj= obj.value # value of userpreference
-            valueobj=int(valueobj)
-            userpreference=int(userpreference)
+            obj= Preference.objects.get(user=request.user, video=video)
+
+            valueobj= obj.value #value of userpreference
+
+
+            valueobj= int(valueobj)
+
+            userpreference= int(userpreference)
+    
             if valueobj != userpreference:
                 obj.delete()
-                upref=Preference()
-                upref.user = request.user
-                upref.post = video
-                upref.value=userpreference
-                
+
+
+                upref= Preference()
+                upref.user= request.user
+
+                upref.video= video
+
+                upref.value= userpreference
+
+
                 if userpreference == 1 and valueobj != 1:
                     video.likes += 1
-                    video.dislikes += 1
+                    video.dislikes -=1
                 elif userpreference == 2 and valueobj != 2:
                     video.dislikes += 1
                     video.likes -= 1
-                    
-                    upref.save()
-                    video.save()
-                    context={'video':video,
-                             'video_id':video_id}
                 
-                    return render (request, 'posts/detail.html', context)
-                                
-                        
+
+                upref.save()
+
+                video.save()
         
-                
+        
+                context= {'video': video,
+                    'video_id': video_id}
+
+                return render (request, 'studiopal/studio_detail', context)
+
+            elif valueobj == userpreference:
+                obj.delete()
+        
+                if userpreference == 1:
+                    video.likes -= 1
+                elif userpreference == 2:
+                    video.dislikes -= 1
+
+                video.save()
+
+                context= {'video_id': video_id}
+
+                return render (request, 'studiopal/studio_detail', context)
+                            
+                    
+    
+            
         except Preference.DoesNotExist:
             upref= Preference()
 
             upref.user= request.user
 
-            upref.video= video
+            upref.post= video
 
             upref.value= userpreference
 
@@ -156,15 +186,15 @@ def video_preference(request, video_id, userpreference):
             context= {'video': video,
                 'video_id': video_id}
 
-            return render (request, 'studiopal/video_preference.html', context)
+            return render (request, 'studiopal/studio_detail.html', context)
 
 
     else:
-        video = get_object_or_404(Video, id=video_id)
+        video= get_object_or_404(Video, id=video_id)
         context= {'video': video,
                     'video_id': video_id}
 
-        return render (request, 'studiopal/video_preference.html', context)
+        return render (request, 'studiopal/studio_detail.html', context)
 # def like(request, video_pk):
 #     video = get_object_or_404(Video, id=video_pk)
 #     newlike = Like.objects.create(user=request.user, video=video)
