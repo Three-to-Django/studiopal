@@ -28,6 +28,10 @@
     </div>
     {% endif %}
   </div>
+  <div class="donate">
+    <a href= "{{ video.creator.paypal_donation_url }}"><span><i class="fas fa-sm fa-donate"></i></span> Donation to Instructor</a>
+  </div>
+
   <div id="comments-container" class="pt4 ml5 mb4">
     {% for comment in video.comments.all reversed %}
     <div class="comment" style="padding: 10px;">
