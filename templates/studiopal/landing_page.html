@@ -23,13 +23,16 @@
             <a href="{% url 'video_detail' video_pk=video.pk %}">
               <img src="http://unsplash.it/250/150?gravity=center" />
             </a>
+            {{ video.pk }}
           </div>
           <div class="card-content row">
             {% if user.studio_name %}
             <img
               class="col s3 left"
               id="video-card-avatar"
+              src="{{ video.creator.image_medium.url }}"
             />
+            
             {% else %} {% endif %}
             <div class="col s8 right" style="padding: 0px">
               <span class="truncate" id="video-card-title"

@@ -1,8 +1,10 @@
-like
+{% extends 'base.html' %} {% block content %}
 
-{% comment %} {% for video in user.liked.all %}
-    {{ video.title }} {% endcomment %}
+{% for video in user.liked.all %}
+    {{ video.title }} 
+{% endfor %}
 
+{% endblock %}
 
 {% comment %} <div>
     <form action="{% url 'user_detail' video_pk=video.pk %}" method="POST">
@@ -10,4 +12,4 @@ like
         <input type='hidden'>
         <button type='submit'>Like</button>
     </form>
-</div> {% endcomment %}
+</div>  {% endcomment %}

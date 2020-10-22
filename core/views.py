@@ -7,7 +7,7 @@ from django.contrib.postgres.search import SearchVector, SearchQuery
 
 
 from .forms import InstructorForm, VideoForm, CommentsForm
-from .models import Video, Comment
+from .models import Video, Comment, Preference
 from users.models import User
 
 
@@ -94,3 +94,95 @@ def search_instructors_videos(request):
 def user_detail(request, user_pk):
     user = get_object_or_404(User.objects.all(), pk=user_pk)
     return render(request, "studiopal/user_detail.html", {"user": user})
+
+@login_required
+def video_preference(request, video_id, userpreference):
+    if request.method == 'POST':
+        video=get_object_or_404(Video, pk=video_id)
+        
+        # obj="
+        # valueobj="
+
+        try:
+            obj=Preference.objects.get(user=request.user, video=video)
+            valueobj= obj.value # value of userpreference
+            valueobj=int(valueobj)
+            userpreference=int(userpreference)
+            if valueobj != userpreference:
+                obj.delete()
+                upref=Preference()
+                upref.user = request.user
+                upref.post = video
+                upref.value=userpreference
+                
+                if userpreference == 1 and valueobj != 1:
+                    video.likes += 1
+                    video.dislikes += 1
+                elif userpreference == 2 and valueobj != 2:
+                    video.dislikes += 1
+                    video.likes -= 1
+                    
+                    upref.save()
+                    video.save()
+                    context={'video':video,
+                             'video_id':video_id}
+                
+                    return render (request, 'posts/detail.html', context)
+                                
+                        
+        
+                
+        except Preference.DoesNotExist:
+            upref= Preference()
+
+            upref.user= request.user
+
+            upref.video= video
+
+            upref.value= userpreference
+
+            userpreference= int(userpreference)
+
+            if userpreference == 1:
+                video.likes += 1
+            elif userpreference == 2:
+                video.dislikes +=1
+
+            upref.save()
+
+            video.save()                            
+
+
+            context= {'video': video,
+                'video_id': video_id}
+
+            return render (request, 'studiopal/video_preference.html', context)
+
+
+    else:
+        video = get_object_or_404(Video, id=video_id)
+        context= {'video': video,
+                    'video_id': video_id}
+
+        return render (request, 'studiopal/video_preference.html', context)
+# def like(request, video_pk):
+#     video = get_object_or_404(Video, id=video_pk)
+#     newlike = Like.objects.create(user=request.user, video=video)
+#     newlike.video_pk = video
+#     return redirect("studiopal/user_detail.html",)
+
+# def like(request, video_pk):
+#     video = get_object_or_404(Video, pk=video_pk)
+#     try:
+#         selected_videos = video.liked.get(pk=request.POST['choice'])
+#     except (KeyError, Video.DoesNotExist):
+#         return render(request, 'studiopal/user_detail.html', {
+#             'video': video,
+#             'error_message': "you don't like anything.",
+#         })
+#     else:
+#         selected_videos.like += 1
+#         selected_videos.save()
+#         return render(request, "studiopal/user_detail.html", {
+#             'video': video,
+#             'selected_videos': selected_videos

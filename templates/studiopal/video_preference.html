@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1> Videos </h1>
+    <h1> Title: {{ video.title }} </h1>
+
+    <a href="#" onClick="document.getElemendById('likebutton').submit()">Like This Video</a> {{ video.likes }} | <a href="#" onClick="document.getElementById('dislikebutton').submit()">Dislike this video</a> {{ video.dislikes }}
+
+    <form id="likebutton" method="POST"
+    action="/videos/{{ video.id }}/preference/1/">
+    {% csrf_token %}
+    <input type='hidden'>
+    </form>
+
+    <form id="dislikebutton" method="POST"
+    action="/videos/{{ video.id }}/preference/2/">
+    {% csrf_token %}
+    <input type='hidden'>
+    </form>
+
+
+{% endblock %}

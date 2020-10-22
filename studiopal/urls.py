@@ -18,6 +18,7 @@ from django.conf import settings
 from django.urls import include, path
 from django.conf.urls.static import static
 from core import views
+from django.conf.urls import url
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -39,6 +40,7 @@ urlpatterns = [
         name="video_detail",
     ),
     path("studiopal/user_detail/<int:user_pk>/", views.user_detail, name="user_detail"),
+    url(r'^(?P<video_id>\d+)/preference/(?P<userpreference>\d+)/$', views.video_preference, name='video_preference'),
     path("", views.landing_page, name="landing_page"),
     path("studiopal/about/", views.about, name="about"),
     path(

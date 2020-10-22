@@ -24,7 +24,7 @@
     <p>{{ video.description }}</p>
     {% if user.studio_name %}
     <div class="card-img" border-radius:50%;>
-      <img src="{{ user.image_medium.url }}" />
+      <img src="{{ video.creator.image_medium.url }}" />
     </div>
     {% endif %}
   </div>
