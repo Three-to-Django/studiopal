@@ -115,7 +115,7 @@ section > h5 {
     font-family: 'Playfair Display', serif; 
     color: #6767f6;
     width: 500px;
-}
+}  
 
 #cta-subtitle {
     font-family: Open sans; 
@@ -147,4 +147,21 @@ video {
 #studio_detail_username {
     display: flex;
     align-items: center;
+}
+
+.donate {
+    background-color: #6767f6;
+    border: none;
+    padding: 10px 20px;
+    font-size: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 16px;
+}
+
+.donate:hover {
+    background-color: #4242cc;
 }

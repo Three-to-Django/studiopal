@@ -28,7 +28,9 @@ class Video(models.Model):
         to=User, on_delete=models.CASCADE, related_name="videos"
     )
     video = models.FileField(upload_to="media/")
-    video_thumbnail = models.ImageField(upload_to="media/img/", null=True, blank=True)
+    video_thumbnail = models.ImageField(
+        upload_to="media/img/", default="img/naurto_thumbsup.jpg", null=True, blank=True
+    )
     tags = TaggableManager()
     liked = models.ManyToManyField(to="like", related_name="videos")
     publish_date = models.DateTimeField(auto_now_add=True)

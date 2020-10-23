@@ -17,6 +17,13 @@
       <source src="{{ video.video.url }}" type="video/H264-RCDO" />
       <source src="{{ video.video.url }}" type="video/H264-SVC" />
     </video>
+
+  </div>
+  {%  if video.creator.paypal_donation_url  %}
+<div class="donate">
+  <a href= "{{ video.creator.paypal_donation_url }}" style="color:#ffffff"><span><i class="fas fa-sm fa-donate"></i></span> Donate</a>
+</div>
+  {% endif %}
     <h3>{{ video.title }}</h3>
     <h5>{{ video.liked.count }}</h5>
 
@@ -27,10 +34,7 @@
       <img src="{{ user.image_medium.url }}" />
     </div>
     {% endif %}
-  </div>
-  <div class="donate">
-    <a href= "{{ video.creator.paypal_donation_url }}"><span><i class="fas fa-sm fa-donate"></i></span> Donation to Instructor</a>
-  </div>
+
 
   <div id="comments-container" class="pt4 ml5 mb4">
     {% for comment in video.comments.all reversed %}
@@ -43,6 +47,7 @@
     </div>
     {% endfor %}
   </div>
+  {% if user.is_authenticated %} 
   <div class="comment-form">
     {% csrf_token %}
     <textarea id="comment-form"></textarea>
@@ -77,6 +82,8 @@
             })
         })
   </script>
-
+  {% else %}
+  <a href="{% url 'registration_register' %}"><p style = "color: #7787e2";>Register to Comment</p></a>
+  {% endif %}
   {% endblock %}
 </div>
