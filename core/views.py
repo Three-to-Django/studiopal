@@ -6,7 +6,7 @@ from django.core.files import File
 from .forms import InstructorForm, VideoForm, CommentsForm
 from .models import Video, Comment
 from users.models import User
-from studiopal.settings import AZURE_STATIC_ROOT
+from studiopal.settings import AZURE_STATIC_ROOT, MEDIA_URL
 
 from moviepy.editor import *
 from PIL import Image
@@ -15,7 +15,8 @@ from PIL import Image
 @login_required
 def video_upload(request):
     def create_video_thumbnail(video_obj):
-        with VideoFileClip(video_obj.video.path, audio=False) as clip:
+        video_path = f"{MEDIA_URL}".append(video_obj.name)
+        with VideoFileClip(video_path, audio=False) as clip:
             duration = clip.duration
             max_duration = int(clip.duration) + 1
             print(max_duration)
@@ -96,7 +97,6 @@ def add_studio_info(request, user_pk):
 def studio_detail(request, user_pk):
     user = get_object_or_404(User.objects.all(), pk=user_pk)
     return render(request, "studiopal/studio_detail.html", {"user": user})
-
 
 
 def about(request):
