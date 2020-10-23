@@ -18,7 +18,9 @@
       <source src="{{ video.video.url }}" type="video/H264-SVC" />
     </video>
     <h3>{{ video.title }}</h3>
-    <p>published date</p>
+    <h5>{{ video.liked.count }}</h5>
+
+    <p>{{ video.publish_date }}</p>
     <p>{{ video.description }}</p>
     {% if user.studio_name %}
     <div class="card-img" border-radius:50%;>
@@ -26,6 +28,10 @@
     </div>
     {% endif %}
   </div>
+  <div class="donate">
+    <a href= "{{ video.creator.paypal_donation_url }}"><span><i class="fas fa-sm fa-donate"></i></span> Donation to Instructor</a>
+  </div>
+
   <div id="comments-container" class="pt4 ml5 mb4">
     {% for comment in video.comments.all reversed %}
     <div class="comment" style="padding: 10px;">

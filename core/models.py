@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.postgres.search import SearchVector
 
+
 # Create your models here.
 
 from imagekit.models import ImageSpecField
@@ -27,9 +28,10 @@ class Video(models.Model):
         to=User, on_delete=models.CASCADE, related_name="videos"
     )
     video = models.FileField(upload_to="media/")
-    # thumbnail
-    upvoted = models.IntegerField(default=0)
+    video_thumbnail = models.ImageField(upload_to="media/img/", null=True, blank=True)
     tags = TaggableManager()
+    liked = models.ManyToManyField(to="like", related_name="videos")
+    publish_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
@@ -46,9 +48,8 @@ class Comment(models.Model):
     )
 
 
-# class Gallery(models.Model):
-#     title = models.CharField(max_length=500)
-#     owner = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='galleries', blank=True)
-#     tags = TaggableManager()
-#     def __str__(self):
-#         return self.title
+class Like(models.Model):
+    count = models.IntegerField(default=True, blank=True, null=True)
+    user = models.ForeignKey(
+        to=User, related_name="likes", on_delete=models.CASCADE, null=True
+    )

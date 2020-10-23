@@ -9,22 +9,21 @@
         <div class="card">
           <div class="card-image">
             <a href="{% url 'video_detail' video_pk=video.pk %}">
-              <img src="http://unsplash.it/250/150?gravity=center" />
+              <img
+                src="{{ video.video_thumbnail.url }}"
+                alt="http://unsplash.it/250/150?gravity=center"
+              />
             </a>
           </div>
           <div class="card-content row">
             {% if user.studio_name %}
-            <img
-              class="col s3 left"
-              id="video-card-avatar"
-              src="#"
-            />
+            <img class="col s3 left" id="video-card-avatar" src="#" />
             {% else %} {% endif %}
             <div class="col s8 right" style="padding: 0px">
               <span class="truncate" id="video-card-title"
                 >{{ video.title }}</span
               >
-              <p id="video-card-date">Mar 16 2020</p>
+              <p id="video-card-date">{{ video.publish_date }}</p>
               <p id="video-card-details">
                 {{ video.creator }} • 19K views
               </p>

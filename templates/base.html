@@ -25,9 +25,9 @@
             <span id="logo-studio">Studio</span><span id="logo-pal">Pal.</span>
           </div>
         </a>
-        <ul class="right hide-on-med-and-down">
+        <ul class="right hide-on-med-and-down" style="width: 745px;">
           {% if not user.is_authenticated %}
-          <li>
+          <li class="row">
             <a href="{% url 'auth_login' %}">
               Login
             </a>
@@ -41,6 +41,7 @@
           <a href="{% url 'studio_detail' user_pk=user.pk %}">
             <li id="nav-item-username">
               <div class="nav-item-with-icon-container">
+              {% if user.studio_name %}
                 <div id="avatar">
                   <img
                     class="col s3 left"
@@ -48,7 +49,9 @@
                     src="{{ user.image_medium.url }}"
                   />
                 </div>
+                {% else %} {% endif %}
                 Hey, {{ user.username }}!
+                {{ user.pk }}
               </div>
             </li>
           </a>
@@ -69,15 +72,9 @@
             </form>
           </li>
           <li class="row">
-            <div class="donate">
-              <a
-                href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=i1215%40icloud.com&currency_code=USD"
-                ><span><i class="fas fa-sm fa-donate"></i></span> Donate</a
-              >
-            </div>
           </li>
           {% if user.studio_name %}
-          <li>
+          <li class="row">
             <a href="{% url 'add_studio_info' user_pk=user.pk %}">
               <div class="nav-item-with-icon-container">
                 <span><i class="fas fa-sm fa-edit"></i></span>
@@ -85,7 +82,7 @@
               </div>
             </a>
           </li>
-          <li>
+          <li class="row">
             <a href="{% url 'studio_detail' user_pk=user.pk %}">
               <div class="nav-item-with-icon-container">
                 <span><i class="fas fa-sm fa-chalkboard"></i></span>
@@ -94,7 +91,7 @@
             </a>
           </li>
           {% else %}
-          <li>
+          <li class="row">
             <a href="{% url 'add_studio_info' user_pk=user.pk %}">
               <div class="nav-item-with-icon-container">
                 <span><i class="fas fa-sm fa-chalkboard"></i></span>
@@ -103,7 +100,9 @@
             </a>
           </li>
           {% endif %}
-          <li><a href="{% url 'auth_logout' %}">Logout</a></li>
+          <li class="row">
+            <a href="{% url 'auth_logout' %}">Logout</a>
+          </li>
         </ul>
         {% endif %}
       </div>

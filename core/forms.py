@@ -25,4 +25,5 @@ class InstructorForm(forms.ModelForm):
             "studio_name",
             "profile_photo",
             "bio",
+            "paypal_donation_url",
         ]
