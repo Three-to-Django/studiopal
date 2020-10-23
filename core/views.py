@@ -1,4 +1,4 @@
-import os, json
+import os, json, uuid
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
@@ -15,7 +15,7 @@ from PIL import Image
 @login_required
 def video_upload(request):
     def create_video_thumbnail(video_obj):
-        video_path = f"{MEDIA_URL}" + str(video_obj.name)
+        video_path = f"{MEDIA_URL}" + f"{video_obj}"
         with VideoFileClip(video_path, audio=False) as clip:
             duration = clip.duration
             max_duration = int(clip.duration) + 1
