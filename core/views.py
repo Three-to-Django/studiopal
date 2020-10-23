@@ -131,7 +131,7 @@ def user_detail(request, user_pk):
 def video_preference(request, video_id, userpreference):
         
     if request.method == "POST":
-        video= get_object_or_404(Video, id=video_id)
+        video = get_object_or_404(Video, id=video_id)
 
         obj=''
 
@@ -175,7 +175,7 @@ def video_preference(request, video_id, userpreference):
                 context= {'video': video,
                     'video_id': video_id}
 
-                return render (request, 'studiopal/studio_detail', context)
+                return render (request, 'studiopal/video_preference.html', context)
 
             elif valueobj == userpreference:
                 obj.delete()
@@ -189,7 +189,7 @@ def video_preference(request, video_id, userpreference):
 
                 context= {'video_id': video_id}
 
-                return render (request, 'studiopal/studio_detail', context)
+                return render (request, 'studiopal/video_preference.html', context)
                             
                     
     
@@ -218,7 +218,7 @@ def video_preference(request, video_id, userpreference):
             context= {'video': video,
                 'video_id': video_id}
 
-            return render (request, 'studiopal/studio_detail.html', context)
+            return render (request, 'studiopal/video_preference.html', context)
 
 
     else:
@@ -226,7 +226,7 @@ def video_preference(request, video_id, userpreference):
         context= {'video': video,
                     'video_id': video_id}
 
-        return render (request, 'studiopal/studio_detail.html', context)
+        return render (request, 'studiopal/video_preference.html', context)
 # def like(request, video_pk):
 #     video = get_object_or_404(Video, id=video_pk)
 #     newlike = Like.objects.create(user=request.user, video=video)

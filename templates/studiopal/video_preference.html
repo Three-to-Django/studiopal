@@ -3,7 +3,7 @@
     <h1> Videos </h1>
     <h1> Title: {{ video.title }} </h1>
 
-    <a href="#" onClick="document.getElemendById('likebutton').submit()">Like This Video</a> {{ video.likes }} | <a href="#" onClick="document.getElementById('dislikebutton').submit()">Dislike this video</a> {{ video.dislikes }}
+    <a href="#" onClick="document.getElemendById('likebutton').submit()">Like This Video</a> {{ video.likes }} | <a href="#" onClick="document.getElementById('dislikebutton').submit()">Dislike this video</p> {{ video.dislikes }}
 
     <form id="likebutton" method="POST"
     action="/videos/{{ video.id }}/preference/1/">
