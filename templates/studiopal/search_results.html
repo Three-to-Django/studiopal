@@ -9,10 +9,7 @@
         <div class="card">
           <div class="card-image">
             <a href="{% url 'video_detail' video_pk=video.pk %}">
-              <img
-                src="{{ video.video_thumbnail.url }}"
-                alt="{% static 'img/naurto_thumbsup.jpg' %}"
-              />
+              <img src="{{ video.video_thumbnail.url }}" />
             </a>
           </div>
           <div class="card-content row">
