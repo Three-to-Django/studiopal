@@ -15,7 +15,7 @@ from PIL import Image
 @login_required
 def video_upload(request):
     def create_video_thumbnail(video_obj):
-        video_path = f"{MEDIA_ROOT}" + f"{video_obj.video.name}"
+        video_path = os.path.join(MEDIA_ROOT, video_obj.video.name)
         with VideoFileClip(video_path, audio=False) as clip:
             duration = clip.duration
             max_duration = int(clip.duration) + 1
