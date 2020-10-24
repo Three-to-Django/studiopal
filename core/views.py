@@ -6,7 +6,7 @@ from django.core.files import File
 from .forms import InstructorForm, VideoForm, CommentsForm
 from .models import Video, Comment
 from users.models import User
-from studiopal.settings import AZURE_STATIC_ROOT, MEDIA_URL
+from studiopal.settings import AZURE_STATIC_ROOT, MEDIA_URL, MEDIA_ROOT
 
 from moviepy.editor import *
 from PIL import Image
@@ -15,7 +15,7 @@ from PIL import Image
 @login_required
 def video_upload(request):
     def create_video_thumbnail(video_obj):
-        video_path = f"{MEDIA_URL}" + f"{video_obj.video.name}"
+        video_path = f"{MEDIA_ROOT}" + f"{video_obj.video.name}"
         with VideoFileClip(video_path, audio=False) as clip:
             duration = clip.duration
             max_duration = int(clip.duration) + 1
