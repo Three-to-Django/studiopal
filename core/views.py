@@ -25,7 +25,6 @@ def video_upload(request):
             video_thumbnail = Image.fromarray(thumbnail_frame)
             thumbnail_path = os.path.join(AZURE_STATIC_ROOT, f"{video}.jpg")
             video_thumbnail.save(thumbnail_path)
-            clip.close()
 
             # create an ImageFile compatable with Django's ORM/Postgres
 
