@@ -23,7 +23,7 @@
             <a href="{% url 'video_detail' video_pk=video.pk %}">
               <img
                 src="{{ video.video_thumbnail.url }}"
-                alt="http://unsplash.it/250/150?gravity=center"
+                alt="{% static 'img/naurto_thumbsup.jpg' %}"
               />
             </a>
           </div>
