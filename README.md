@@ -1,4 +1,4 @@
-# Studiopal - Fintness Platform
+# Studiopal - Fitness Platform
 
 This project represent the final project for Momentum Coding Bootcamp.
 
