@@ -33,7 +33,7 @@
       >
     </div>
   </div>
-  <h5 style="margin-top: 50px">{{ user.username }}'s Favorite Sessions</h5>
+  <h5 style="margin-top: 50px">{{ user.username }}'s Favorited Sessions</h5>
   <div class="row">
     {% for video in user.liked_videos.all %}
     <div class="col m4">
@@ -62,8 +62,7 @@
               <a href="{% url 'studio_detail' user_pk=video.creator.pk %}"
                 >{{ video.creator }}</a
               >
-              | {{ video.liked_by.count }}
-              <i class="fas fa-heart fa-sm" style="color:#6767f6"></i>
+              | {{ video.liked_by.count }} favorited
             </p>
           </div>
         </div>

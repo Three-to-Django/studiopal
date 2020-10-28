@@ -66,8 +66,7 @@
                 <a href="{% url 'studio_detail' user_pk=video.creator.pk %}"
                   >{{ video.creator }}</a
                 >
-                | {{ video.liked_by.count }}
-                <i class="fas fa-heart fa-sm" style="color:#6767f6"></i>
+                | {{ video.liked_by.count }} favorited
               </p>
             </div>
           </div>
@@ -85,7 +84,7 @@
     <section>
       <div class="row empty-state">
         <h5 style="margin-top: 75px; padding-left: 10px">
-          {{ user.username }}'s Favorite Sessions
+          {{ user.username }}'s Favorited Sessions
         </h5>
         {% for video in user.liked_videos.all %}
         <div class="col m4">
@@ -117,8 +116,7 @@
                   <a href="{% url 'studio_detail' user_pk=video.creator.pk %}"
                     >{{ video.creator }}</a
                   >
-                  | {{ video.liked_by.count }}
-                  <i class="fas fa-heart fa-sm" style="color:#6767f6"></i>
+                  | {{ video.liked_by.count }} favorited
                 </p>
               </div>
             </div>
