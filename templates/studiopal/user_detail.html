@@ -20,7 +20,7 @@
       <a  id="edit-bio-btn" class="btn edit-bio-btn" href="{% url 'add_user_info' user_pk=user.pk %}">Edit Profile</a>
     </div>
   </div>
-  <h5 style="margin-top: 50px">Favorite Sessions</h5>
+  <h5 style="margin-top: 50px">Favorited Sessions</h5>
   <div class="row">
     {% for video in user.liked_videos.all %}
     <div class="col m4">
@@ -42,7 +42,7 @@
             >
             <p id="video-card-date">{{ video.publish_date }}</p>
             <p id="video-card-details">
-              {{ video.creator }} | {{ video.liked_by.count }} like(s) 
+              {{ video.creator }} | {{ video.liked_by.count }} favorited 
             </p>
           </div>
         </div>

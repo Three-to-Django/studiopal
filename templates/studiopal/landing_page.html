@@ -35,7 +35,7 @@
               >
               <p id="video-card-date">{{ video.publish_date }}</p>
               <p id="video-card-details">
-                {{ video.creator }} | {{ video.likes }} like(s)
+                {{ video.creator }} | {{ video.likes }} favorited
               </p>
             </div>
           </div>
@@ -45,7 +45,7 @@
     </div>
 
     <div class="row">
-      <h5 style="margin-top: 75px; padding-left: 10px">Liked Sessions</h5>
+      <h5 style="margin-top: 75px; padding-left: 10px">Favorited Sessions</h5>
       {% for video in user.liked_videos.all %}
       <div class="col m4">
         <div class="card small">
@@ -67,7 +67,7 @@
               >
               <p id="video-card-date">{{ video.publish_date }}</p>
               <p id="video-card-details">
-                {{ video.creator }} | {{ video.liked_by.count }} like(s)
+                {{ video.creator }} | {{ video.liked_by.count }} favorited
               </p>
             </div>
           </div>
