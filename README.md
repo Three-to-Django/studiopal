@@ -1,7 +1,5 @@
 # Studiopal - Fitness Platform
 
-This project represent the final project for Momentum Coding Bootcamp.
-
 - git clone https://github.com/Three-to-Django/studiopal.git
 - cd studiopal
 - pipenv install OR pip install -r requirements.txt (for venv or conda users)

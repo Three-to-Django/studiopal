@@ -18,10 +18,15 @@ from django.conf import settings
 from django.urls import include, path
 from django.conf.urls.static import static
 from core import views
+from core.views import MyRegistrationView
+from django.views.generic import TemplateView
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("registration.backends.simple.urls")),
+    path('accounts/register/', MyRegistrationView.as_view(), name='registration_register'),
+    path('accounts/', include('django.contrib.auth.urls')),
     path(
         "studiopal/add_comment/<int:video_pk>/", views.add_comment, name="add_comment"
     ),
@@ -40,12 +45,22 @@ urlpatterns = [
     ),
     path("studiopal/user_detail/<int:user_pk>/", views.user_detail, name="user_detail"),
     path("", views.landing_page, name="landing_page"),
-    path("studiopal/about/", views.about, name="about"),
     path(
         "studiopal/search_results/",
         views.search_instructors_videos,
         name="search_results",
     ),
+    path(
+        "studiopal/video_detail/<int:video_pk>/liked/",
+        views.toggle_liked_video,
+        name="toggle_liked_video",
+    ),
+    path(
+        "studiopal/<int:user_pk>/add_user_info/",
+        views.add_user_info,
+        name="add_user_info",
+    ),
+    path('accounts/register/transfer', views.registration_transfer, name='registration_transfer'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

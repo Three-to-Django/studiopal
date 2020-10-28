@@ -5,6 +5,8 @@ from studiopal.settings import AZURE_STATIC_ROOT
 from .models import Video, Comment, User
 from moviepy.editor import *
 from PIL import Image
+from django.contrib.auth.forms import UserCreationForm
+from registration.forms import RegistrationForm
 
 
 class VideoForm(forms.ModelForm):
@@ -35,4 +37,29 @@ class InstructorForm(forms.ModelForm):
             "profile_photo",
             "bio",
             "paypal_donation_url",
+        ]
+        
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = {
+            "profile_photo",
+            "user_bio",
+        }
+
+class RegistrationForm(UserCreationForm):
+
+    email = forms.EmailField(required=True)
+    first_name = forms.CharField(required=True)
+    last_name = forms.CharField(max_length=55)
+
+    class Meta:
+        model= User
+        fields = [
+            'username',
+            'email',
+            'first_name',
+            'last_name',
+            'password1',
+            'password2'
         ]

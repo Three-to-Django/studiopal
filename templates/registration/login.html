@@ -1,0 +1,46 @@
+{% extends "registration/registration_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Log in" %}{% endblock %}
+{% block content %}
+    <div class="container" style="padding-top: 125px">
+  {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+  {% endif %}
+  
+  {% if next %}
+    {% if user.is_authenticated %}
+      <p>Your account doesn't have access to this page. To proceed,
+      please login with an account that has access.</p>
+    {% else %}
+      <p>Please login to see this page.</p>
+    {% endif %}
+  {% endif %}
+    <div class="card">
+    <div class="card-content">
+    <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      <table>
+        <tr style="border: none">
+          <td class="">{{ form.username.label_tag }}</td>
+          <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+          <td class="">{{ form.password.label_tag }}</td>
+          <td>{{ form.password }}</td>
+        </tr>
+      </table>
+      <div style="display: flex; flex-direction: row; justify-content: space-between; margin-top: 10px">
+      <input class="btn" type="submit" value="login" />
+      <input class="btn" type="hidden" name="next" value="{{ next }}" />
+    </form>
+  {# Assumes you setup the password_reset view in your URLconf #}
+    <div>
+      <p><a href="{% url 'auth_password_reset' %}">Lost password?</a></p>
+      <p>{% trans "Not a member?" %} <strong><a href="{% url 'registration_register' %}">{% trans "Register" %}</a></strong>.</p>
+    </div>
+    </div>
+    </div>
+    </div>
+</div>
+{% endblock %}

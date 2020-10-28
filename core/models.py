@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.postgres.search import SearchVector
-
+from django.db.models import Q, Count
 
 # Create your models here.
 
@@ -18,6 +18,21 @@ class VideoQuerySet(models.QuerySet):
         )
         return video_results
 
+    def count_interactions(self):
+        videos = self.annotate(
+            num_likes=Count("liked_by", distinct=True),
+        )
+        return videos
+
+    def interacted_with(self):
+        videos = (
+            self.count_interactions()
+            .filter(Q(num_likes__gt=0))
+            .order_by("num_likes")
+            .reverse()
+        )
+        return videos
+
 
 # Create your models here.
 class Video(models.Model):
@@ -34,8 +49,7 @@ class Video(models.Model):
         null=True,
         blank=True,
     )
-    tags = TaggableManager()
-    liked = models.ManyToManyField(to="like", related_name="videos")
+    liked_by = models.ManyToManyField(to=User, related_name="liked_videos", blank=True)
     publish_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -50,11 +64,4 @@ class Comment(models.Model):
     )
     video = models.ForeignKey(
         to=Video, on_delete=models.CASCADE, related_name="comments"
-    )
-
-
-class Like(models.Model):
-    count = models.IntegerField(default=True, blank=True, null=True)
-    user = models.ForeignKey(
-        to=User, related_name="likes", on_delete=models.CASCADE, null=True
     )

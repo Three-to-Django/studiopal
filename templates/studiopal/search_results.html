@@ -2,33 +2,49 @@
 
 <div class="container">
   <section>
-    <h5 style="margin-top: 100px">Search Results</h5>
     <div class="row">
+      <h5 style="margin-top: 75px; padding-left: 10px">Search Results</h5>
       {% for video in videos %}
       <div class="col m4">
-        <div class="card">
-          <div class="card-image">
+        <div class="card small">
+          <div class="card-image" style="height: 100%">
             <a href="{% url 'video_detail' video_pk=video.pk %}">
-              <img src="{{ video.video_thumbnail.url }}" />
+              <img style="height: 100%" src="{{ video.video_thumbnail.url }}" />
             </a>
           </div>
           <div class="card-content row">
-            {% if user.studio_name %}
-            <img class="col s3 left" id="video-card-avatar" src="#" />
-            {% else %} {% endif %}
+            <a href="{% url 'studio_detail' user_pk=video.creator.pk %}">
+              <img
+                class="col s3 left"
+                id="video-card-avatar"
+                src="{{ video.creator.image_medium.url }}"
+              />
+            </a>
             <div class="col s8 right" style="padding: 0px">
               <span class="truncate" id="video-card-title"
-                >{{ video.title }}</span
+                ><a href="{% url 'video_detail' video_pk=video.pk %}"
+                  >{{ video.title }}</a
+                ></span
               >
               <p id="video-card-date">{{ video.publish_date }}</p>
               <p id="video-card-details">
-                {{ video.creator }} • 19K views
+                <a href="{% url 'studio_detail' user_pk=video.creator.pk %}"
+                  >{{ video.creator }}</a
+                >
+                | {{ video.liked_by.count }}
+                <i class="fas fa-heart fa-sm" style="color:#6767f6"></i>
               </p>
             </div>
           </div>
         </div>
       </div>
-      {% endfor %}
+      {% endfor %} {% if not videos %}
+      <div class="card empty-state">
+        <div class="card-content">
+          No results match that search.
+        </div>
+      </div>
+      {% endif %}
     </div>
   </section>
 </div>

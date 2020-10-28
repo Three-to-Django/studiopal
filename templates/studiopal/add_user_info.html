@@ -1,20 +1,22 @@
 {% extends "base.html" %} {% load static %} {% block content %}
-<div class="container" style="padding-top: 125px;">
+<div class="container" style="padding-top: 125px">
   <div class="row">
-    {% if user.studio_name %}
-    <h5>Edit studio</h5>
+    {% if user.user_bio%}
+    <h5>Edit profile</h5>
     {% else %}
-    <h5>Create studio</h5>
+    <h5>Edit profile</h5>
     <p style="margin: 0px;">
-      <span style="font-weight: 600; font-size: 13px;" id="cta-subtitle"
-        >Fill out the form below to get started as an instructor.</span
+      <span
+        id="cta-subtitle"
+        style="font-weight: 600; font-size: 13px; margin: 0;"
+        >Fill out the form below to get your fitness journey started!</span
       >
     </p>
     {% endif %}
-    <div class="card">
+    <div class="card" style="width: 800px">
       <div class="card-content">
         <form
-          action="{% url 'add_studio_info' user_pk=user.pk %}"
+          action="{% url 'add_user_info' user_pk=user.pk %}"
           method="POST"
           enctype="multipart/form-data"
         >

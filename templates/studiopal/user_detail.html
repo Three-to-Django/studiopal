@@ -1,10 +1,81 @@
-like {% comment %} {% for video in user.liked.all %} {{ video.title }} {%
-endcomment %} {% comment %}
-<div>
-  <form action="{% url 'user_detail' video_pk=video.pk %}" method="POST">
-    {% csrf_token %}
-    <input type="hidden" />
-    <button type="submit">Like</button>
-  </form>
+{% extends 'base.html' %} {% block content %} {% load static %}
+<div class="container">
+  <div class="card profile-card">
+    <div class="bio-img-container">
+      <div class="row" style="margin-bottom: 0px">
+        {% if not user.user_bio %}
+        <img
+          class="circle"
+          src="{% static 'img/placeholder-image.png' %}"
+          style="margin-bottom: 10px;"
+        />
+        {% else %}
+        <img
+          class="circle"
+          src="{{ user.image_medium.url }}"
+          style="margin-bottom: 10px;"
+        />
+        {% endif %}
+      </div>
+      <p class="subtitle">Pal since: {{ user.joined_date }}</p>
+    </div>
+    <div class="studio-bio-container">
+      <h2>{{ user.username }}'s Profile</h2>
+      <div>
+        {% if not user.user_bio%} No bio added yet. {% else %} {{ user.user_bio
+        }} {% endif %}
+      </div>
+      <a
+        id="edit-bio-btn"
+        class="btn edit-bio-btn"
+        href="{% url 'add_user_info' user_pk=user.pk %}"
+        >Edit Profile</a
+      >
+    </div>
+  </div>
+  <h5 style="margin-top: 50px">{{ user.username }}'s Favorite Sessions</h5>
+  <div class="row">
+    {% for video in user.liked_videos.all %}
+    <div class="col m4">
+      <div class="card small">
+        <div class="card-image" style="height: 100%">
+          <a href="{% url 'video_detail' video_pk=video.pk %}">
+            <img style="height: 100%" src="{{ video.video_thumbnail.url }}" />
+          </a>
+        </div>
+        <div class="card-content row">
+          <a href="{% url 'studio_detail' user_pk=video.creator.pk %}">
+            <img
+              class="col s3 left"
+              id="video-card-avatar"
+              src="{{ video.creator.image_medium.url }}"
+            />
+          </a>
+          <div class="col s8 right" style="padding: 0px">
+            <span class="truncate" id="video-card-title"
+              ><a href="{% url 'video_detail' video_pk=video.pk %}"
+                >{{ video.title }}</a
+              ></span
+            >
+            <p id="video-card-date">{{ video.publish_date }}</p>
+            <p id="video-card-details">
+              <a href="{% url 'studio_detail' user_pk=video.creator.pk %}"
+                >{{ video.creator }}</a
+              >
+              | {{ video.liked_by.count }}
+              <i class="fas fa-heart fa-sm" style="color:#6767f6"></i>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %} {% if not user.liked_videos.all %}
+    <div class="card empty-state">
+      <div class="card-content">
+        No favorited sessions yet.
+      </div>
+    </div>
+    {% endif %}
+  </div>
 </div>
-{% endcomment %}
+{% endblock %}

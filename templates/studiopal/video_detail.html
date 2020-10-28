@@ -1,6 +1,7 @@
-{% extends 'base.html' %} {% block content %} {% load static %}
-<div class="container">
-  <div class="row">
+{%extends "base.html"%} {%load static%} {%block content%}
+
+<div class="container detail-container">
+  <div id="video-container">
     <video class="col s12" controls>
       <source src="{{ video.video.url }}" type="video/mp4" />
       <source src="{{ video.video.url }}" type="video/x-flv" />
@@ -17,74 +18,148 @@
       <source src="{{ video.video.url }}" type="video/H264-RCDO" />
       <source src="{{ video.video.url }}" type="video/H264-SVC" />
     </video>
-  </div>
-  {% if video.creator.paypal_donation_url %}
-  <div class="donate">
-    <a href="{{ video.creator.paypal_donation_url }}" style="color:#ffffff"
-      ><span><i class="fas fa-sm fa-donate"></i></span> Donate</a
-    >
-  </div>
-  {% endif %}
-  <h3>{{ video.title }}</h3>
-  <h5>{{ video.liked.count }}</h5>
-
-  <p>{{ video.publish_date }}</p>
-  <p>{{ video.description }}</p>
-  {% if user.studio_name %}
-  <div class="card-img" border-radius:50%;>
-    <img src="{{ user.image_medium.url }}" />
-  </div>
-  {% endif %}
-
-  <div id="comments-container" class="pt4 ml5 mb4">
-    {% for comment in video.comments.all reversed %}
-    <div class="comment" style="padding: 10px;">
-      <p class="comment-text">{{ comment.text }}</p>
-      <p class="comment-date">{{comment.pub_date}}</p>
-      <p class="comments-author">
-        by <span class="font-weight-bold">{{ comment.author }}</span>
-      </p>
+    <div id="video-details-container">
+      <div
+        style="display: flex; justify-content: space-between; align-items: center;"
+      >
+        <h5 style="padding:0">{{ video.title }}</h5>
+        {% if request.user.is_authenticated%}
+        <a
+          id="toggle-like"
+          data-video-id="{{ video.pk }}"
+          class="no-underline pointer dib grow"
+        >
+          {% if liked_video %}
+          <i class="fas fa-heart" style="font-size:30px;color:#6767f6"></i>
+          {% else %}
+          <i class="far fa-heart" style="font-size:30px;color:#6767f6"></i>
+          {% endif %}</a
+        >
+        {% endif %}
+      </div>
+      <div id="video-details">
+        <p>{{ video.publish_date }}</p>
+        {%if video.creator.paypal_donation_url%}
+        <a
+          class="btn"
+          target="_blank"
+          href="{{ video.creator.paypal_donation_url }} "
+          style="color:#ffffff"
+          ><span><i class="fas fa-sm fa-donate"></i></span> Donate</a
+        >
+        {%endif%}
+      </div>
     </div>
-    {% endfor %}
+    <div class="card">
+      <div class="card-content" id="video-desc-container">
+        <img
+          class="circle"
+          height="55px"
+          width="55px"
+          src="{{ video.creator.image_medium.url }}"
+        />
+        <div id="video-desc-creator">
+          <p>{{ video.creator.username }}</p>
+          <p>{{ video.creator.studio_name }}</p>
+        </div>
+        <div style="width: 100%; max-height: 150px; overflow-y: scroll;">
+          <p>{{ video.description }}</p>
+        </div>
+      </div>
+    </div>
   </div>
-  {% if user.is_authenticated %}
-  <div class="comment-form">
-    {% csrf_token %}
-    <textarea id="comment-form"></textarea>
-    <button id="comment-button">Add Comments</button>
+
+  <div id="comments-container">
+    <div>
+      <div style="overflow: auto; height: 375px">
+        {%for comment in video.comments.all %}
+        <div class="card" id="comment-content">
+          <div class="card-content">
+            <p>{{ comment.text }}</p>
+            <p id="comment-pub-date">{{comment.pub_date}}</p>
+            <p id="video-author">by <span>{{ comment.author }}</span></p>
+          </div>
+        </div>
+        {% endfor %} {% if not video.comments.all %}
+        <div class="card empty-state">
+          <div class="card-content">
+            No comments yet.
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      {% if user.is_authenticated %}
+      <div class="comment-form">
+        {% csrf_token %}
+        <textarea id="comment-form"></textarea>
+        <button class="btn" id="comment-button">Add Comment</button>
+        {% else %}
+        <a href="{% url 'registration_register' %}"
+          ><p style="color: #7787e2" ;>Register to Comment</p></a
+        >
+      </div>
+    </div>
   </div>
-  <script>
-    const commentButton = document.querySelector("#comment-button")
-    commentButton.addEventListener("click", function(){
-        console.log("button clicked")
-        const csrfToken = document.querySelector("input[name='csrfmiddlewaretoken']").value
-        let commentInput = document.getElementById("comment-form")
-        const videoID =  {{ video.pk }}
-        fetch(`/studiopal/add_comment/${videoID}/`, {
-            method: 'POST',
-            body: JSON.stringify({"text": commentInput.value }),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-                'X-CSRFToken': csrfToken
-            }
-        })
-        .then(res => res.json())
-            .then(data => {
-                console.log("Response returned")
-                console.log(data)
-                const commentsContainer = document.querySelector('#comments-container')
-                const newDiv = document.createElement("div")
-                newDiv.className="comment"
-                newDiv.style="padding: 10px;"
-                newDiv.innerHTML = data.html
-                commentsContainer.appendChild(newDiv)
-                commentInput.value =''
-            })
-        })
-  </script>
-  {% else %}
-  <a href="{% url 'registration_register' %}"
-    ><p style="color: #7787e2" ;>Register to Comment</p></a
-  >
-  {% endif %} {% endblock %}
 </div>
+
+{%endif%} {%if not user.is_authenticated%} {%endif%}
+<script>
+  const commentButton = document.querySelector("#comment-button")
+  commentButton.addEventListener("click", function(){
+      console.log("button clicked")
+      const csrfToken = document.querySelector("input[name='csrfmiddlewaretoken']").value
+      let commentInput = document.getElementById("comment-form")
+      const videoID =  {{ video.pk }}
+      fetch(`/studiopal/add_comment/${videoID}/`, {
+          method: 'POST',
+          body: JSON.stringify({"text": commentInput.value }),
+          headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+              'X-CSRFToken': csrfToken
+          }
+      })
+      .then(res => res.json())
+          .then(data => {
+              console.log("Response returned")
+              console.log(data)
+              const commentsContainer = document.querySelector('#comments-container')
+              const newDiv = document.createElement("div")
+              newDiv.className="comment"
+              newDiv.style="padding: 0px;"
+              newDiv.innerHTML = data.html
+              commentsContainer.appendChild(newDiv)
+              commentInput.value =''
+          })
+      })
+</script>
+<script>
+  const toggleLikedLink = document.querySelector('#toggle-like')
+  toggleLikedLink.addEventListener('click', function (event) {
+    event.preventDefault()
+    const videoId = toggleLikedLink.dataset['videoId']
+
+    fetch(`/studiopal/video_detail/${videoId}/liked/`, {
+      credentials: 'same-origin',
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'X-Requested-With': 'XMLHttpRequest' //Necessary to work with request.is_ajax
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        if (data.liked_video) {
+          toggleLikedLink.innerHTML =
+            '<i class="fas fa-heart" style="font-size:30px;color:#6767f6"></i>'
+        } else {
+          toggleLikedLink.innerHTML =
+            '<i class="far fa-heart" style="font-size:30px;color:#6767f6"></i>'
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  })
+</script>
+{%endblock%}

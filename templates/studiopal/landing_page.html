@@ -1,81 +1,95 @@
 {% extends 'base.html' %} {% block content %} {% load static %}
 
 <div class="container">
-  <div id="hero-img-container" class="row">
-    <img
-      class="col s10"
-      id="hero-img"
-      src="{% static 'img/studio_pal_hero_bike.png'%}"
-    />
-    <div class="col s6" id="hero-copy-container">
-      <h2 id="cta-title">With StudioPal your home is your fitness studio.</h2>
-      <span id="cta-subtitle">Stay safe, stay fit, stay connected.</span>
-      <a href="{% url 'about' %}" class="col s6 waves-light btn">Learn more</a>
-    </div>
+  {% if not user.is_authenticated %}
+  <div>
+    <h2 id="cta-title">With StudioPal your home is your fitness studio.</h2>
+    <span id="cta-subtitle">Stay safe, stay fit, stay connected.</span>
   </div>
+  {% endif %}
   <section>
-    <h5 style="margin-top: 100px">Latest Sessions</h5>
     <div class="row">
+      <h5 style="margin-top: 75px; padding-left: 10px">Latest Sessions</h5>
       {% for video in videos %}
       <div class="col m4">
-        <div class="card">
-          <div class="card-image">
+        <div class="card small">
+          <div class="card-image" style="height: 100%">
             <a href="{% url 'video_detail' video_pk=video.pk %}">
-              <img src="{{ video.video_thumbnail.url }}" />
+              <img style="height: 100%" src="{{ video.video_thumbnail.url }}" />
             </a>
           </div>
           <div class="card-content row">
-            {% if user.studio_name %}
-            <img class="col s3 left" id="video-card-avatar" />
-            {% else %} {% endif %}
+            <a href="{% url 'studio_detail' user_pk=video.creator.pk %}">
+              <img
+                class="col s3 left"
+                id="video-card-avatar"
+                src="{{ video.creator.image_medium.url }}"
+              />
+            </a>
             <div class="col s8 right" style="padding: 0px">
               <span class="truncate" id="video-card-title"
-                >{{ video.title }}</span
+                ><a href="{% url 'video_detail' video_pk=video.pk %}"
+                  >{{ video.title }}</a
+                ></span
               >
               <p id="video-card-date">{{ video.publish_date }}</p>
               <p id="video-card-details">
-                {{ video.creator }} • {{ video.liked.count }}
-                <i class="fas fa-thumbs-up"></i>
+                <a href="{% url 'studio_detail' user_pk=video.creator.pk %}"
+                  >{{ video.creator }}</a
+                >
+                | {{ video.likes }}
+                <i class="fas fa-heart fa-sm" style="color:#6767f6"></i>
               </p>
             </div>
           </div>
         </div>
       </div>
       {% endfor %}
-      <section>
-        {% comment %}
+    </div>
 
-        <h5>Favorite Sessions</h5>
-        <div class="row">
-          <div class="col m4">
-            <div class="card">
-              <div class="card-image">
-                <a href="#">
-                  <img src="http://unsplash.it/250/150?gravity=center" />
-                </a>
-              </div>
-              <div class="card-content row">
-                <img
-                  class="col s3 left"
-                  id="video-card-avatar"
-                  src="http://unsplash.it/250/150?gravity=center"
-                />
-                <div class="col s8 right" style="padding: 0px">
-                  <span class="truncate" id="video-card-title"
-                    >Nccu historic preservation oprah building gritty
-                    preservation oprah building gritty</span
-                  >
-                  <p id="video-card-date">Mar 16 2020</p>
-                  <p id="video-card-details">
-                    Studio Name • 19K views
-                  </p>
-                </div>
-              </div>
+    <div class="row">
+      <h5 style="margin-top: 75px; padding-left: 10px">Liked Sessions</h5>
+      {% for video in user.liked_videos.all %}
+      <div class="col m4">
+        <div class="card small">
+          <div class="card-image" style="height: 100%">
+            <a href="{% url 'video_detail' video_pk=video.pk %}">
+              <img style="height: 100%" src="{{ video.video_thumbnail.url }}" />
+            </a>
+          </div>
+          <div class="card-content row">
+            <a href="{% url 'studio_detail' user_pk=video.creator.pk %}">
+              <img
+                class="col s3 left"
+                id="video-card-avatar"
+                src="{{ video.creator.image_medium.url }}"
+              />
+            </a>
+            <div class="col s8 right" style="padding: 0px">
+              <span class="truncate" id="video-card-title"
+                ><a href="{% url 'video_detail' video_pk=video.pk %}"
+                  >{{ video.title }}</a
+                ></span
+              >
+              <p id="video-card-date">{{ video.publish_date }}</p>
+              <p id="video-card-details">
+                <a href="{% url 'studio_detail' user_pk=video.creator.pk %}"
+                  >{{ video.creator }}</a
+                >
+                | {{ video.likes }}
+                <i class="fas fa-heart fa-sm" style="color:#6767f6"></i>
+              </p>
             </div>
           </div>
-          {% endcomment %}
         </div>
-      </section>
+      </div>
+      {% endfor %} {% if not user.liked_videos.all %}
+      <div class="card empty-state">
+        <div class="card-content">
+          No favorited sessions yet.
+        </div>
+      </div>
+      {% endif %}
     </div>
   </section>
 </div>
