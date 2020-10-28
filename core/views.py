@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from registration.backends.simple.views import RegistrationView
 from django.urls import reverse_lazy
-from studiopal.settings import AZURE_STATIC_ROOT, MEDIA_ROOT
+from studiopal.settings import AZURE_STATIC_ROOT, MEDIA_ROOT, MEDIA_URL
 
 from .forms import InstructorForm, VideoForm, CommentsForm, UserForm, RegistrationForm
 from .models import Video, Comment
@@ -20,7 +20,7 @@ from PIL import Image
 @login_required
 def video_upload(request):
     def create_video_thumbnail(video_obj):
-        video_path = os.path.join(MEDIA_ROOT, video_obj.video.name)
+        video_path = os.path.join(MEDIA_URL, video_obj.video.name)
         with VideoFileClip(video_path, audio=False) as clip:
             duration = clip.duration
             max_duration = int(clip.duration) + 1
