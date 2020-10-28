@@ -93,7 +93,7 @@ def add_comment(request, video_pk):
         new_comment.save()
         html = (
             f'<div class="card" id="comment-content"><div class="card-content">'
-            f"<p>{new_comment.text}</p>"
+            f'<p>{new_comment.text}</p>'
             f'<p id="video-author">by <span>{new_comment.author}</span></p></div></div>'
         )
     return JsonResponse({"html": html})

@@ -71,17 +71,18 @@
             {% if user.studio_name%}
             <a href="{% url 'studio_detail' user_pk=user.pk %}">
               <div id="nav-item-username-container">
-                {% if user.bio or user.studio_name %}
-                <img
-                  class="circle responsive-img"
-                  src="{{ user.image_medium.url }}"
-                />
-                {% else %}
-                <img
-                  class="circle responsive-img"
-                  src="{% static 'img/placeholder-img.png'%}"
-                />
-                {% endif %} Hey, {{ user.username }}!
+              {% if user.studio_name or user.user_bio %}
+                    <img
+                    class="circle responsive-img"
+                    src="{{ user.image_medium.url }}"
+                  />
+              {% else %}
+                  <img
+                    class="circle responsive-img"
+                    src="{% static 'img/placeholder-img.png'%}"
+                  />
+              {% endif %}
+                Hey, {{ user.username }}!
               </div>
             </a>
             {% else %}

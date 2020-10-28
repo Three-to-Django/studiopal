@@ -75,24 +75,18 @@
     </div>
   </div>
 
-  <div id="comments-container">
-    <div>
-      <div style="overflow: auto; height: 375px">
-        {%for comment in video.comments.all %}
-        <div class="card" id="comment-content">
-          <div class="card-content">
-            <p>{{ comment.text }}</p>
-            <p id="video-author">by <span>{{ comment.author }}</span></p>
-          </div>
+<div id="comments-container">
+  <div>
+    <div  style="overflow: auto; height: 375px">
+      {%for comment in video.comments.all %}
+      <div class="card" id="comment-content">
+        <div class="card-content">
+          <p>{{ comment.text }}</p>
+          <p id="video-author">by <span>{{ comment.author }}</span></p>
         </div>
-        {% endfor %} {% if not video.comments.all %}
-        <div class="card empty-state">
-          <div class="card-content">
-            No comments yet.
-          </div>
-        </div>
-        {% endif %}
       </div>
+      {% endfor %}
+    </div>
       {% if user.is_authenticated %}
       <div class="comment-form">
         {% csrf_token %}
