@@ -246,6 +246,14 @@ video {
     /* width: 100%; */
 }
 
+video::-internal-media-controls-download-button { 
+    display:none; 
+} 
+ 
+video::-webkit-media-controls-enclosure { 
+    overflow:hidden; 
+} 
+
 .detail-container {
     display: flex; 
     width: 100%; 
