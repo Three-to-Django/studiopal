@@ -2,7 +2,7 @@
 
 <div class="container detail-container">
   <div id="video-container">
-    <video class="col s12" controls>
+    <video id="video-player" class="col s12" controls controlslist="nodownload">
       <source src="{{ video.video.url }}" type="video/mp4" />
       <source src="{{ video.video.url }}" type="video/x-flv" />
       <source src="{{ video.video.url }}" type="video/MP2T" />
@@ -103,6 +103,13 @@
 </div>
 
 {%endif%} {%if not user.is_authenticated%} {%endif%}
+<script>
+  $(document).ready(function () {
+    $('#video-player').bind('contextmenu', function () {
+      return false
+    })
+  })
+</script>
 <script>
   const commentButton = document.querySelector("#comment-button")
   commentButton.addEventListener("click", function(){
