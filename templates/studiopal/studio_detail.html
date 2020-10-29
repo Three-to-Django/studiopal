@@ -37,7 +37,7 @@
   <section>
     <div class="row">
       <h5 style="margin-top: 75px; padding-left: 10px">
-        {{ user.username }}'s Sessions
+        Sessions
       </h5>
       {% for video in user.videos.all %}
       <div class="col m4">
@@ -66,7 +66,7 @@
                 <a href="{% url 'studio_detail' user_pk=video.creator.pk %}"
                   >{{ video.creator }}</a
                 >
-                | {{ video.liked_by.count }} favorited
+                | {{ video.liked_by.count }} <i class="icon fas fa-sm fa-heart"></i>
               </p>
             </div>
           </div>
@@ -80,11 +80,10 @@
       </div>
       {% endif %}
     </div>
-
     <section>
       <div class="row empty-state">
-        <h5 style="margin-top: 75px; padding-left: 10px">
-          {{ user.username }}'s Favorited Sessions
+        <h5 style="margin-top: 75px;">
+          Favorited sessions
         </h5>
         {% for video in user.liked_videos.all %}
         <div class="col m4">
@@ -116,7 +115,7 @@
                   <a href="{% url 'studio_detail' user_pk=video.creator.pk %}"
                     >{{ video.creator }}</a
                   >
-                  | {{ video.liked_by.count }} favorited
+                  | {{ video.liked_by.count }} <i class="icon fas fa-sm fa-heart"></i>
                 </p>
               </div>
             </div>

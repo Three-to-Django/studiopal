@@ -1,12 +1,6 @@
 {%extends "base.html"%} {%load static%} {%block content%}
 
-<script
-  src="https://code.jquery.com/jquery-3.5.1.min.js"
-  integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
-  crossorigin="anonymous"
-></script>
-
-<div class="container detail-container">
+<div class="container detail-container" >
   <div id="video-container">
     <video id="video-player" class="col s12" controls controlslist="nodownload">
       <source src="{{ video.video.url }}" type="video/mp4" />
@@ -25,38 +19,36 @@
       <source src="{{ video.video.url }}" type="video/H264-SVC" />
     </video>
     <div id="video-details-container">
-      <div
-        style="display: flex; justify-content: space-between; align-items: center;"
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h5 style="padding:0">{{ video.title }}</h5>
+      {% if request.user.is_authenticated%}
+      <a
+        id="toggle-like"
+        data-video-id="{{ video.pk }}"
+        class="no-underline pointer dib grow"
       >
-        <h5 style="padding:0">{{ video.title }}</h5>
-        {% if request.user.is_authenticated%}
-        <a
-          id="toggle-like"
-          data-video-id="{{ video.pk }}"
-          class="no-underline pointer dib grow"
-        >
-          {% if liked_video %}
-          <i class="fas fa-heart" style="font-size:30px;color:#6767f6"></i>
-          {% else %}
-          <i class="far fa-heart" style="font-size:30px;color:#6767f6"></i>
-          {% endif %}</a
-        >
-        {% endif %}
-      </div>
+        {% if liked_video %}
+        <i class="fas fa-heart" style="font-size:30px;color:#6767f6"></i>
+        {% else %}
+        <i class="far fa-heart" style="font-size:30px;color:#6767f6"></i>
+        {% endif %}</a
+      >
+      {% endif %}
+    </div>
       <div id="video-details">
-        <p>{{ video.publish_date }}</p>
+        <p>{{ video.publish_date }} </p>
         {%if video.creator.paypal_donation_url%}
         <a
           class="btn"
-          target="_blank"
-          href="{{ video.creator.paypal_donation_url }} "
+          target="_blank" href="{{ video.creator.paypal_donation_url }} "
           style="color:#ffffff"
           ><span><i class="fas fa-sm fa-donate"></i></span> Donate</a
         >
         {%endif%}
       </div>
     </div>
-    <div class="card">
+    <div  class="card">
+    <a href="{% url 'studio_detail' user_pk=video.creator.pk %}">
       <div class="card-content" id="video-desc-container">
         <img
           class="circle"
@@ -67,7 +59,7 @@
         <div id="video-desc-creator">
           <p>{{ video.creator.username }}</p>
           <p>{{ video.creator.studio_name }}</p>
-        </div>
+      </div></a>
         <div style="width: 100%; max-height: 150px; overflow-y: scroll;">
           <p>{{ video.description }}</p>
         </div>
@@ -86,6 +78,13 @@
         </div>
       </div>
       {% endfor %}
+      {% if not video.comments.all %}
+      <div class="card empty-state">
+        <div class="card-content">
+          No comments yet. 
+        </div>
+      </div>
+      {% endif %}
     </div>
       {% if user.is_authenticated %}
       <div class="comment-form">
@@ -93,22 +92,16 @@
         <textarea id="comment-form"></textarea>
         <button class="btn" id="comment-button">Add Comment</button>
         {% else %}
-        <a href="{% url 'registration_register' %}"
-          ><p style="color: #7787e2" ;>Register to Comment</p></a
-        >
+        <a href="{% url 'registration_register' %}"><p style="color: #7787e2" ;>Register to Comment</p></a>
       </div>
     </div>
   </div>
 </div>
 
-{%endif%} {%if not user.is_authenticated%} {%endif%}
-<script>
-  $(document).ready(function () {
-    $('#video-player').bind('contextmenu', function () {
-      return false
-    })
-  })
-</script>
+{%endif%} 
+{%if not user.is_authenticated%}
+
+{%endif%}
 <script>
   const commentButton = document.querySelector("#comment-button")
   commentButton.addEventListener("click", function(){
@@ -156,11 +149,9 @@
       .then(data => {
         console.log(data)
         if (data.liked_video) {
-          toggleLikedLink.innerHTML =
-            '<i class="fas fa-heart" style="font-size:30px;color:#6767f6"></i>'
+          toggleLikedLink.innerHTML = '<i class="fas fa-heart" style="font-size:30px;color:#6767f6"></i>'
         } else {
-          toggleLikedLink.innerHTML =
-            '<i class="far fa-heart" style="font-size:30px;color:#6767f6"></i>'
+          toggleLikedLink.innerHTML = '<i class="far fa-heart" style="font-size:30px;color:#6767f6"></i>'
         }
       })
       .catch(err => {

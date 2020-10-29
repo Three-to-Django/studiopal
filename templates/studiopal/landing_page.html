@@ -2,14 +2,14 @@
 
 <div class="container">
   {% if not user.is_authenticated %}
-  <div>
+  <div style="margin-top: 65px">
     <h2 id="cta-title">With StudioPal your home is your fitness studio.</h2>
     <span id="cta-subtitle">Stay safe, stay fit, stay connected.</span>
   </div>
   {% endif %}
   <section>
     <div class="row">
-      <h5 style="margin-top: 75px; padding-left: 10px">Latest Sessions</h5>
+      <h5 style="margin-top: 75px; padding-left: 10px">Latest sessions</h5>
       {% for video in videos %}
       <div class="col m4">
         <div class="card small">
@@ -37,7 +37,7 @@
                 <a href="{% url 'studio_detail' user_pk=video.creator.pk %}"
                   >{{ video.creator }}</a
                 >
-                | {{ video.likes }} favorited
+                | {{ video.liked_by.count }} <i class="icon fas fa-sm fa-heart"></i>
               </p>
             </div>
           </div>
@@ -47,7 +47,7 @@
     </div>
 
     <div class="row">
-      <h5 style="margin-top: 75px; padding-left: 10px">Favorited Sessions</h5>
+      <h5 style="margin-top: 75px; padding-left: 10px">Favorited sessions</h5>
       {% for video in user.liked_videos.all %}
       <div class="col m4">
         <div class="card small">
@@ -75,7 +75,7 @@
                 <a href="{% url 'studio_detail' user_pk=video.creator.pk %}"
                   >{{ video.creator }}</a
                 >
-                | {{ video.liked_by.count }} favorited
+                | {{ video.liked_by.count }} <i class="icon fas fa-sm fa-heart"></i>
               </p>
             </div>
           </div>

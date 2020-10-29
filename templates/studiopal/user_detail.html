@@ -22,8 +22,7 @@
     <div class="studio-bio-container">
       <h2>{{ user.username }}'s Profile</h2>
       <div>
-        {% if not user.user_bio%} No bio added yet. {% else %} {{ user.user_bio
-        }} {% endif %}
+        {% if not user.user_bio%} No bio added yet. {% else %} {{ user.user_bio }} {% endif %}
       </div>
       <a
         id="edit-bio-btn"
@@ -33,7 +32,7 @@
       >
     </div>
   </div>
-  <h5 style="margin-top: 50px">{{ user.username }}'s Favorited Sessions</h5>
+  <h5 style="margin-top: 50px">Favorited sessions</h5>
   <div class="row">
     {% for video in user.liked_videos.all %}
     <div class="col m4">
@@ -62,7 +61,7 @@
               <a href="{% url 'studio_detail' user_pk=video.creator.pk %}"
                 >{{ video.creator }}</a
               >
-              | {{ video.liked_by.count }} favorited
+              | {{ video.liked_by.count }} <i class="icon fas fa-sm fa-heart"></i>
             </p>
           </div>
         </div>
