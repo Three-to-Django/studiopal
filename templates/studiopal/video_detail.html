@@ -6,7 +6,10 @@
   crossorigin="anonymous"
 ></script>
 
-<div class="container detail-container">
+<div
+  class="container"
+  style="display: flex; width: 100%; align-items: center; overflow: hidden "
+>
   <div id="video-container">
     <video id="video-player" class="col s12" controls controlslist="nodownload">
       <source src="{{ video.video.url }}" type="video/mp4" />
@@ -78,37 +81,29 @@
   </div>
 
   <div id="comments-container">
+    {% if user.is_authenticated %}
+    <div class="comment-form">
+      {% csrf_token %}
+      <textarea id="comment-form"></textarea>
+      <button class="btn" id="comment-button">Add Comment</button>
+      {% else %}
+    </div>
+    {%endif%}
     <div>
-      <div style="overflow: auto; height: 375px">
+      <div style="overflow: auto;" id="comments-subcontainer">
         {%for comment in video.comments.all %}
         <div class="card" id="comment-content">
           <div class="card-content">
             <p>{{ comment.text }}</p>
+            <p id="comment-pub-date">{{comment.pub_date}}</p>
             <p id="video-author">by <span>{{ comment.author }}</span></p>
           </div>
         </div>
-        {% endfor %} {% if not video.comments.all %}
-        <div class="card empty-state">
-          <div class="card-content">
-            No comments yet.
-          </div>
-        </div>
-        {% endif %}
-      </div>
-      {% if user.is_authenticated %}
-      <div class="comment-form">
-        {% csrf_token %}
-        <textarea id="comment-form"></textarea>
-        <button class="btn" id="comment-button">Add Comment</button>
-        {% else %}
-        <a href="{% url 'registration_register' %}"
-          ><p style="color: #7787e2" ;>Register to Comment</p></a
-        >
+        {% endfor %}
       </div>
     </div>
   </div>
 </div>
-
 {%endif%} {%if not user.is_authenticated%} {%endif%}
 <script>
   $(document).ready(function () {
@@ -117,6 +112,11 @@
     })
   })
 </script>
+{%if not user.is_authenticated%}
+<a href="{% url 'registration_register' %}"
+  ><p style="color: #7787e2" ;>Register to Comment</p></a
+>
+{%endif%}
 <script>
   const commentButton = document.querySelector("#comment-button")
   commentButton.addEventListener("click", function(){
@@ -136,12 +136,12 @@
           .then(data => {
               console.log("Response returned")
               console.log(data)
-              const commentsContainer = document.querySelector('#comments-container')
+              const commentsContainer = document.querySelector('#comments-subcontainer')
               const newDiv = document.createElement("div")
               newDiv.className="comment"
               newDiv.style="padding: 0px;"
               newDiv.innerHTML = data.html
-              commentsContainer.appendChild(newDiv)
+              commentsContainer.prepend(newDiv)
               commentInput.value =''
           })
       })

@@ -46,6 +46,7 @@
       {% endfor %}
     </div>
 
+{% if user.is_authenticated %}
     <div class="row">
       <h5 style="margin-top: 75px; padding-left: 10px">Favorited sessions</h5>
       {% for video in user.liked_videos.all %}
@@ -81,14 +82,14 @@
           </div>
         </div>
       </div>
-      {% endfor %} {% if not user.liked_videos.all %}
+      {% endfor %} 
       <div class="card empty-state">
         <div class="card-content">
           No favorite sessions yet.
         </div>
       </div>
-      {% endif %}
     </div>
   </section>
 </div>
+{% endif %}
 {% endblock %}
