@@ -37,7 +37,8 @@
                 <a href="{% url 'studio_detail' user_pk=video.creator.pk %}"
                   >{{ video.creator }}</a
                 >
-                | {{ video.liked_by.count }} <i class="icon fas fa-sm fa-heart"></i>
+                | {{ video.liked_by.count }}
+                <i class="icon fas fa-sm fa-heart"></i>
               </p>
             </div>
           </div>
@@ -46,7 +47,7 @@
       {% endfor %}
     </div>
 
-{% if user.is_authenticated %}
+    {% if user.is_authenticated %}
     <div class="row">
       <h5 style="margin-top: 75px; padding-left: 10px">Favorited sessions</h5>
       {% for video in user.liked_videos.all %}
@@ -76,20 +77,21 @@
                 <a href="{% url 'studio_detail' user_pk=video.creator.pk %}"
                   >{{ video.creator }}</a
                 >
-                | {{ video.liked_by.count }} <i class="icon fas fa-sm fa-heart"></i>
+                | {{ video.liked_by.count }}
+                <i class="icon fas fa-sm fa-heart"></i>
               </p>
             </div>
           </div>
         </div>
       </div>
-      {% endfor %} 
+      {% endfor %}
       <div class="card empty-state">
         <div class="card-content">
           No favorite sessions yet.
         </div>
       </div>
     </div>
+    {% endif %}
   </section>
 </div>
-{% endif %}
 {% endblock %}
