@@ -104,7 +104,11 @@
     </div>
   </div>
 </div>
-{%endif%} {%if not user.is_authenticated%} {%endif%}
+{%endif%} {%if not user.is_authenticated%}
+<a href="{% url 'registration_register' %}"
+  ><p style="color: #7787e2" ;>Register to Comment</p></a
+>
+{%endif%}
 <script>
   $(document).ready(function () {
     $('#video-player').bind('contextmenu', function () {
@@ -112,11 +116,6 @@
     })
   })
 </script>
-{%if not user.is_authenticated%}
-<a href="{% url 'registration_register' %}"
-  ><p style="color: #7787e2" ;>Register to Comment</p></a
->
-{%endif%}
 <script>
   const commentButton = document.querySelector("#comment-button")
   commentButton.addEventListener("click", function(){
